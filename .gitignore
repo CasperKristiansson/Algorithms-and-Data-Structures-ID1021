@@ -2,3 +2,4 @@ Litteratur
 *.exe
 **/[Tt]est*
 Module 1\test.c
+.vscode
