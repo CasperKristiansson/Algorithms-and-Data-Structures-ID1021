@@ -94,6 +94,9 @@ public class Uppgift2 {
                 current = current.next;
                 return item;
             }
+
+            public void remove() {  }
+
         }
     }
 }
