@@ -37,7 +37,6 @@ public class Uppgift3 {
         private class Node {
             Item item;
             Node next;
-            Node prev;
         }
 
         public Queue() {
@@ -51,7 +50,6 @@ public class Uppgift3 {
             last = new Node();
             last.item = item;
             last.next = null;
-            last.prev = oldlast;
             if (isEmpty())
                 first = last;
             else

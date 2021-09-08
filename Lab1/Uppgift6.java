@@ -1,11 +1,12 @@
-/*Implement a generalized queue which allows the user to remove the kth
-element from the queue. Assume the most recently added element has index 1.
-You should print the content of the list after each insertion/deletion of an element.
+/*Implement an ordered queue based on one of the implementations above. The elements
+stored in the queue should be integer values. The elements should be ordered at
+insertion so that all elements are stored in ascending order starting from when
+you insert the first element and in all following insertions. You should print
+the content of the list after each insertion/deletion of an element.
 */
 import java.util.Iterator;
 
-public class Uppgift5 {
-    
+public class Uppgift6 {
     public static void main(String[] args) {
         Queue<Integer> queue = new Queue<Integer>();
         queue.enqueue(1);
@@ -17,7 +18,13 @@ public class Uppgift5 {
         queue.enqueue(4);
         System.out.println(queue);
 
-        queue.removeSpecific(2);
+        queue.dequeue();
+        System.out.println(queue);
+        queue.dequeue();
+        System.out.println(queue);
+        queue.dequeue();
+        System.out.println(queue);
+        queue.dequeue();
         System.out.println(queue);
     }
 
@@ -59,22 +66,6 @@ public class Uppgift5 {
             if (isEmpty())
                 last = null;
             return item;
-        }
-
-        public Item removeSpecific(int index) {
-            if (index < 0 || index > n) {
-                return null;
-            }
-            Node node = first;
-            for (int i = 0; i < index - 1; i++) {
-                node = node.next;
-            }
-            node.next = node.next.next;
-            n--;
-            if (isEmpty())
-                last = null;
-
-            return node.next.item;
         }
 
         boolean isEmpty() {
