@@ -1,3 +1,9 @@
+/*
+In C implement a recursive and an iterative version of a function which reads characters from stdin until a
+newline character is read and then prints them on stdout in reverse order. Hint: use getchar(), putchar()
+(or getc(), putc()). For the iterative version you may assume a fixed max length of the input.
+*/
+
 #include <stdio.h>
 
 int main() {
@@ -33,6 +39,7 @@ void recursive() {
     int character = getchar();
     if(character == '\n')
         return;
+
     recursive();
     putchar(character);
 }

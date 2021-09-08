@@ -2,4 +2,6 @@ Litteratur
 *.exe
 **/[Tt]est*
 Module 1\test.c
+Module 1\test.java
 .vscode
+*.class
