@@ -37,10 +37,10 @@ public class Uppgift3 {
             switch (choice) {
                 case 1:
                     System.out.println("\nEnter characters to Enqueue");
-                    String str = input.nextLine();
+                    String characters = input.nextLine();
 
-                    for (int i = 0; i < str.length(); i++) {
-                        queue.enqueue(str.substring(i, i + 1));
+                    for (int i = 0; i < characters.length(); i++) {
+                        queue.enqueue(characters.substring(i, i + 1));
                     }
                     System.out.println(queue);
                     System.out.println("\n");
@@ -48,8 +48,8 @@ public class Uppgift3 {
                 
                 case 2:
                     System.out.println("\nEnter word to Enqueue");
-                    String str2 = input.nextLine();
-                    queue.enqueue(str2);
+                    String word = input.nextLine();
+                    queue.enqueue(word);
                     System.out.println(queue);
                     System.out.println("\n");
                     break;
@@ -122,7 +122,7 @@ public class Uppgift3 {
         }
 
         /**
-         * Enquque method adds an element to the end of the queue by creating a new node
+         * Enqueue method adds an element to the end of the queue by creating a new node
          * and setting the new node as the last node with the help of oldlast.next. If the 
          * queue is empty, the new node is set as the first and last node to keep the queue
          * circular.

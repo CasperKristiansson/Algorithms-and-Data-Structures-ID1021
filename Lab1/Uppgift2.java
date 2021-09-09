@@ -4,7 +4,7 @@ Code Generated: 2021-09-07
 Code Updated: 2021-09-09
 Problem: Implement a iterative and recursive method which reverses a string using
 one of the ADTs suggested in Algorithms ch. 1.3 for the iterative version.
-Sources: https://algs4.cs.princeton.edu/10fundamentals/
+Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Stack
 */
 
 import java.util.Scanner;
