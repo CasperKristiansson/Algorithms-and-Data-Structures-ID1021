@@ -5,6 +5,8 @@ are "balanced" or not. Also show the time and memory complexity of the algorithm
 Balanced: (([{}]){}[])
 Not balanced: (([{)}]){}[])}
 
+if emty return true
+
 Time Complexity: O(n) -> Linear Complexity
 Auxiliary Space: O(n) for stack. 
 */

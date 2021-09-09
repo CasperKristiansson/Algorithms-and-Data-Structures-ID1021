@@ -2,6 +2,10 @@
 remove elements to/from the front and back end of the queue. Be careful when designing
 the API. You should print the content of the list after each insertion/deletion of an element.
 Page 126 for FIFO queue.
+
+last.next = first
+first.next = last
+
 */
 import java.util.Iterator;    
 
