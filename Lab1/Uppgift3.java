@@ -11,8 +11,9 @@ Page: 151
 Author: Casper Kristiansson
 Code Generated: 2021-09-07
 Code Updated: 2021-09-09
-Problem: Implement a iterative and recursive method to reverse a string.
+Problem: Implement a FIFO-queue based on a double linked circular list
 Sources: None
+TODO: DUBBEL LINKED CUIRCLULAR LIST
 */
 
 import java.util.Iterator;

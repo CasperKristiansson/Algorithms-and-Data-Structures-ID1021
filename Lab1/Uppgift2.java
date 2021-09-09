@@ -9,6 +9,7 @@ Sources: https://algs4.cs.princeton.edu/10fundamentals/
 
 import java.util.Scanner;
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Uppgift2 {
     /** 
@@ -26,6 +27,7 @@ public class Uppgift2 {
         
         System.out.println("\nEnter Characters For The Iterative Version");
         String str2 = input.nextLine();
+        input.close();
 
         Stack<String> stack = new Stack<String>();
 
@@ -36,8 +38,6 @@ public class Uppgift2 {
         for(String s : stack) {
             System.out.print(s);
         }
-
-        input.close();
     }
 
     /**
@@ -103,11 +103,12 @@ public class Uppgift2 {
         /**
          * Removes the item at the first position in the stack.
          * 
+         * @throws NoSuchElementException if the stack is empty
          * @return The item at the first position in the stack
          */
         Item pop() {
             if (n == 0)
-                return null;
+                throw new NoSuchElementException("Stack Underflow");
 
             Item item = first.item;
             first = first.next;
@@ -151,6 +152,15 @@ public class Uppgift2 {
         private class ListIterator implements Iterator<Item> {
             private Node current = first;
             
+            /**
+             * The current node is set to the first node in the stack.
+             * 
+             * @param first The first node in the stack
+             */
+            public void LinkedIterator(Node first) {
+                current = first;
+            }
+
             /**
              * Returns true if the iterator has a next item, otherwise false.
              * 
