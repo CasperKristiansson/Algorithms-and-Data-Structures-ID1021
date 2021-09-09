@@ -6,6 +6,7 @@ Balanced: (([{}]){}[])
 Not balanced: (([{)}]){}[])}
 
 if emty return true
+TODO: Dubbel checka vad listiterator är rätt
 
 Time Complexity: O(n) -> Linear Complexity
 Auxiliary Space: O(n) for stack. 

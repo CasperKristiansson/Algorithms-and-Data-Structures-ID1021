@@ -1,7 +1,9 @@
 /*
-In C implement a recursive and an iterative version of a function which reads characters from stdin until a
-newline character is read and then prints them on stdout in reverse order. Hint: use getchar(), putchar()
-(or getc(), putc()). For the iterative version you may assume a fixed max length of the input.
+Author: Casper Kristiansson
+Code Generated: 2021-09-07
+Code Updated: 2021-09-09
+Problem: Implement a iterative and recursive method to reverse a string.
+Sources: None
 */
 
 #include <stdio.h>
@@ -15,7 +17,11 @@ int main() {
     
     return 0;
 }
-
+/**
+ * Iterative Version of the String Reversal which reverses the string
+ * by inputing each character into a char array which has a fixed size.
+ * We than iterate through the array and print each character.
+ */
 void iterative() {
     int length = 10;
     char characters[length];
@@ -35,6 +41,12 @@ void iterative() {
     }
 }
 
+/**
+ * Recursive Version of the String Reversal which reverses the string
+ * reading the input character. It than calls itself to read the next
+ * character. When the end of the string is reached, (character == '\n')
+ * the function returns. Which in turn prints the character in reverse.
+ */
 void recursive() {
     int character = getchar();
     if(character == '\n')

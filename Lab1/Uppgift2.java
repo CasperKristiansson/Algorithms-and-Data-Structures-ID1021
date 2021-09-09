@@ -62,14 +62,14 @@ public class Uppgift2 {
      * when we iterate through the stack we are actually reading the characters from
      * the reverse of the string.
      * 
-     * @param <Item> The type of the stack, in this case a generalized stack
+     * @param <Item> The type of the stack, in this case a generalized type.
      */
     public static class Stack<Item> implements Iterable<Item> {
         private int n;
         private Node first;
         
         /**
-         * Defines the stack by initializing the first node to null.
+         * Construct an empty stack by defining the first node as null,
          * and the size of the stack to 0.
          */
         public Stack() {
@@ -147,7 +147,6 @@ public class Uppgift2 {
          * is not implemented.
          * 
          * @param <Item> The type of the stack, in this case a generalized stack
-         * @return An iterator for the stack
          */
         private class ListIterator implements Iterator<Item> {
             private Node current = first;
