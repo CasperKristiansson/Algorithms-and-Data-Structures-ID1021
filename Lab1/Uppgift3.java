@@ -3,36 +3,89 @@ Author: Casper Kristiansson
 Code Generated: 2021-09-07
 Code Updated: 2021-09-09
 Problem: Implement a FIFO-queue based on a double linked circular list
-Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Queues
-TODO: Fix double linked circular list
+Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Queues,
+https://media.geeksforgeeks.org/wp-content/uploads/Insertion-in-a-list.png
 */
-
+import java.util.Scanner;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class Uppgift3 {
 
     /** 
-     * A test for the Queue class. 
+     * A test for the Queue class. The test is build using 
+     * cases which the user can choose which method to test and use.
      * 
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        Queue<Integer> queue = new Queue<Integer>();
+        Queue<String> queue = new Queue<String>();
+        Scanner input = new Scanner(System.in);
 
-        queue.enqueue(1);
-        System.out.println(queue);
-        queue.enqueue(2);
-        System.out.println(queue);
-        queue.enqueue(3);
-        System.out.println(queue);
+        while (true) {
+            System.out.println("1: Queue Enqueue Character");
+            System.out.println("2: Queue Enqueue Word");
+            System.out.println("3: Queue Dequeue");
+            System.out.println("4: Queue IsEmpty");
+            System.out.println("5: Queue Size");
+            System.out.println("6: Queue Print");
+            System.out.println("7: Exit Program");
 
-        queue.dequeue();
-        System.out.println(queue);
-        queue.dequeue();
-        System.out.println(queue);
-        queue.dequeue();
-        System.out.println(queue);
+            int choice = input.nextInt();
+            input.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("\nEnter characters to Enqueue");
+                    String str = input.nextLine();
+
+                    for (int i = 0; i < str.length(); i++) {
+                        queue.enqueue(str.substring(i, i + 1));
+                    }
+                    System.out.println(queue);
+                    System.out.println("\n");
+                    break;
+                
+                case 2:
+                    System.out.println("\nEnter word to Enqueue");
+                    String str2 = input.nextLine();
+                    queue.enqueue(str2);
+                    System.out.println(queue);
+                    System.out.println("\n");
+                    break;
+
+                case 3:
+                    System.out.print("\nCharacter dequeue: ");
+                    System.out.println(queue.dequeue());
+
+                    System.out.println(queue);
+                    System.out.println("\n");
+                    break;
+                
+                case 4:
+                    System.out.print("\nThe Queue is empty: ");
+                    System.out.println(queue.isEmpty());
+                    System.out.println("\n");
+                    break;
+                
+                case 5:
+                    System.out.print("\nThe Queue size is: ");
+                    System.out.println(queue.size());
+                    System.out.println("\n");
+                    break;
+
+                case 6:
+                    System.out.println();
+                    System.out.println(queue);
+                    System.out.println("\n");
+                    break;
+                
+                case 7:
+                    input.close();
+                    System.exit(0);
+                    break;
+            }
+        }
     }
 
     /**
@@ -40,7 +93,7 @@ public class Uppgift3 {
      * The class is generic, which means that it can store objects of any type.
      * The dequeue method removes the element that has been on the queue the longest,
      * which is the first element inserted into the queue. The enqueue method adds an
-     * element to the end of the queue.
+     * element to the end of the queue. This specific queue is a double linked circular list.
      * 
      * @param <Item> The type of the queue, in this case a generalized type.
      */
@@ -59,17 +112,20 @@ public class Uppgift3 {
             n = 0;
         }
         /**
-         * Declaration of the Node class.
-         * The Node class contains two references to the next node and the item.
+         * Declaration of the Node class. The Node class contains three
+         * references to the next node, the previous node and the item.
          */
         private class Node {
             Item item;
             Node next;
+            Node prev;
         }
 
         /**
          * Enquque method adds an element to the end of the queue by creating a new node
-         * and setting the new node as the last node with the help of oldlast.next.
+         * and setting the new node as the last node with the help of oldlast.next. If the 
+         * queue is empty, the new node is set as the first and last node to keep the queue
+         * circular.
          * 
          * @param item The item to be added to the queue.
          */
@@ -77,11 +133,18 @@ public class Uppgift3 {
             Node oldlast = last;
             last = new Node();
             last.item = item;
-            last.next = null;
-            if (isEmpty())
+            last.next = first;
+            last.prev = oldlast;
+            
+            if (isEmpty()) {
                 first = last;
-            else
+                first.next = last;
+                first.prev = last;
+            }
+            else {
+                first.prev = last;
                 oldlast.next = last;
+            }
             n++;
         }
 
@@ -93,19 +156,26 @@ public class Uppgift3 {
          * @return The item of the first node, which is the element removed from the queue.
          */
         Item dequeue() {
-            if (isEmpty()) {
+            if (isEmpty()) 
                 throw new NoSuchElementException("Queue is empty");
-            }
+
             Item item = first.item;
-            first = first.next;
-            n--;
-            if (isEmpty())
+
+            if (first == last) {
+                first = null;
                 last = null;
+            }
+            else {
+                first = first.next;
+                first.prev = last;
+                last.next = first;
+            }
+            n--;
             return item;
         }
         /**
          * If the stack is empty, return true. If the stack is not empty, return false.
-         * By comparing if the first node is null, we can determine if the stack is empty.
+         * By comparing the first node with null.
          * 
          * @return True if the stack is empty, false if the stack is not empty
          */
@@ -133,11 +203,12 @@ public class Uppgift3 {
             StringBuilder sb = new StringBuilder();
             sb.append("[");
             Node current = first;
-            while (current != null) {
+            for(int i = 0; i < n; i++) {
                 sb.append(current.item);
                 current = current.next;
-                if (current != null)
+                if (current != first) {
                     sb.append(", ");
+                }
             }
             sb.append("]");
             return sb.toString();

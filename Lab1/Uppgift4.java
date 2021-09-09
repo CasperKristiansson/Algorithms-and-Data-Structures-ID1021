@@ -4,7 +4,6 @@ Code Generated: 2021-09-07
 Code Updated: 2021-09-09
 Problem: Implement a FIFO-queue based on a double linked circular list
 Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Queues
-TODO: double linked circular list, last.next = first, first.next = last
 */
 import java.util.Iterator;    
 

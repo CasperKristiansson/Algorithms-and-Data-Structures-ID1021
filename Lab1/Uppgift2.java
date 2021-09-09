@@ -32,6 +32,7 @@ public class Uppgift2 {
             System.out.println("6: Stack Size");
             System.out.println("7: Stack Print");
             System.out.println("8: Exit Program");
+            
             int choice = input.nextInt();
             input.nextLine();
 
