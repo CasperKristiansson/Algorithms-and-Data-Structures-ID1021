@@ -55,22 +55,18 @@ public class Uppgift3 {
                     break;
 
                 case 3:
-                    System.out.print("\nCharacter dequeue: ");
-                    System.out.println(queue.dequeue());
-
+                    System.out.println("\nCharacter dequeue: " + queue.dequeue());
                     System.out.println(queue);
                     System.out.println("\n");
                     break;
                 
                 case 4:
-                    System.out.print("\nThe Queue is empty: ");
-                    System.out.println(queue.isEmpty());
+                    System.out.println("\nThe Queue is empty: " + queue.isEmpty());
                     System.out.println("\n");
                     break;
                 
                 case 5:
-                    System.out.print("\nThe Queue size is: ");
-                    System.out.println(queue.size());
+                    System.out.println("\nThe Queue size is: " + queue.size());
                     System.out.println("\n");
                     break;
 

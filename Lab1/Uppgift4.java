@@ -102,6 +102,7 @@ public class Uppgift4 {
                     break;
 
                 case 10:
+                    input.close();
                     System.exit(0);
                     break;
             }
