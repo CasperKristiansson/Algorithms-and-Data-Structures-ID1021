@@ -14,7 +14,8 @@ import java.util.NoSuchElementException;
 public class Uppgift2 {
     /** 
      * A test for the recursive version of the program and
-     * the iterative version of the program.
+     * the iterative version of the program. The test is built using
+     * cases which the user can choose which method to test and use.
      * 
      * @param args command line arguments
      */
