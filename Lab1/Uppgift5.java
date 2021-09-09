@@ -1,8 +1,10 @@
-/*Implement a generalized queue which allows the user to remove the kth
-element from the queue. Assume the most recently added element has index 1.
-You should print the content of the list after each insertion/deletion of an element.
-
-Fix index last = 1
+/*
+Author: Casper Kristiansson
+Code Generated: 2021-09-08
+Code Updated: 2021-09-09
+Problem: Implement a FIFO-queue based on a double linked circular list
+Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Queues
+TODO: Fix Index
 */
 import java.util.Iterator;
 

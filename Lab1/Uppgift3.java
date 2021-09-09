@@ -1,22 +1,14 @@
-/*Implement a generic iterable FIFO-queue based on a double linked circular list (see the pdf in the module
-Course litterature for a description of double linked circular lists). You should print the content of the
-list after each insertion/deletion of an element.
-
-https://algs4.cs.princeton.edu/13stacks/
-https://www.geeksforgeeks.org/difference-between-stack-and-queue-data-structures/
-Page: 151
-*/
-
 /*
 Author: Casper Kristiansson
 Code Generated: 2021-09-07
 Code Updated: 2021-09-09
 Problem: Implement a FIFO-queue based on a double linked circular list
-Sources: None
-TODO: DUBBEL LINKED CUIRCLULAR LIST
+Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Queues
+TODO: Fix double linked circular list
 */
 
 import java.util.Iterator;
+import java.util.NoSuchElementException;
 
 public class Uppgift3 {
 
@@ -60,7 +52,6 @@ public class Uppgift3 {
         /**
          * Construct an empty queue by defining the first and last node
          * as null and the size as 0.
-         * 
          */
         public Queue() {
             first = null;
@@ -69,7 +60,6 @@ public class Uppgift3 {
         }
         /**
          * Declaration of the Node class.
-         * The Node class is used to create a linked list of the stack.
          * The Node class contains two references to the next node and the item.
          */
         private class Node {
@@ -104,7 +94,7 @@ public class Uppgift3 {
          */
         Item dequeue() {
             if (isEmpty()) {
-                return null;
+                throw new NoSuchElementException("Queue is empty");
             }
             Item item = first.item;
             first = first.next;
@@ -170,6 +160,15 @@ public class Uppgift3 {
          */
         private class ListIterator implements Iterator<Item> {
             private Node current = first;
+
+            /**
+             * The current node is set to the first node in the stack.
+             * 
+             * @param first The first node in the stack
+             */
+            public void LinkedIterator(Node first) {
+                current = first;
+            }
 
             /**
              * Returns true if the iterator has a next item, otherwise false.

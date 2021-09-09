@@ -2,8 +2,8 @@
 Author: Casper Kristiansson
 Code Generated: 2021-09-07
 Code Updated: 2021-09-09
-Problem: Implement the above program in JAVA (both iterative and recursive) using one of the
-ADTs suggested in Algorithms ch. 1.3 for the iterative version.
+Problem: Implement a iterative and recursive method which reverses a string using
+one of the ADTs suggested in Algorithms ch. 1.3 for the iterative version.
 Sources: https://algs4.cs.princeton.edu/10fundamentals/
 */
 
@@ -19,25 +19,97 @@ public class Uppgift2 {
      * @param args command line arguments
      */
     public static void main(String[] args) {
+        Stack<String> stack = new Stack<String>();
         Scanner input = new Scanner(System.in);
 
-        System.out.println("Enter Characters For The Recursive Version");
-        String str = input.nextLine();
-        recursive(str);
+        while (true) {
+            System.out.println("1: Reverse String Using Recursive");
+            System.out.println("2: Reverse String Using Iterative");
+            System.out.println("3: Stack Push");
+            System.out.println("4: Stack Pop");
+            System.out.println("5: Stack IsEmpty");
+            System.out.println("6: Stack Size");
+            System.out.println("7: Stack Print");
+            System.out.println("8: Exit Program");
+            int choice = input.nextInt();
+            input.nextLine();
+
+            switch (choice) {
+                case 1:
+                    System.out.println("\nEnter Characters For The Recursive Version");
+                    String str = input.nextLine();
+                    recursive(str);
+                    System.out.println("\n");
+                    break;
+
+                case 2:
+                    System.out.println("\nEnter Characters For The Iterative Version");
+                    String str2 = input.nextLine();
+
+                    for (int i = 0; i < str2.length(); i++) {
+                        stack.push(str2.substring(i, i + 1));
+                    }
+            
+                    for(String s : stack) {
+                        System.out.print(s);
+                    }
+
+                    System.out.println("\n");
+                    break;
+                
+                case 3:
+                    System.out.println("\nEnter Characters to store in the stack");
+                    String push = input.nextLine();
+
+                    for (int i = 0; i < push.length(); i++) {
+                        stack.push(push.substring(i, i + 1));
+                    }
+            
+                    for(String s : stack) {
+                        System.out.print(s);
+                    }
+                    System.out.println("\n");
+                    break;
+                
+                case 4:
+                    System.out.print("\nCharacter removed: ");
+                    System.out.println(stack.pop());
+
+
+                    for(String s : stack) {
+                        System.out.print(s);
+                    }
+                    System.out.println("\n");
+                    break;
+                
+                case 5:
+                    System.out.print("\nThe stack is empty: ");
+                    System.out.println(stack.isEmpty());
+                    System.out.println("\n");
+                    break;
+                
+                case 6:
+                    System.out.print("\nThe stack size is: ");
+                    System.out.println(stack.size());
+                    System.out.println("\n");
+                    break;
+
+                case 7:
+                    System.out.println();
+                    for(String s : stack) {
+                        System.out.print(s);
+                    }    
+
+                    System.out.println("\n");
+                    break;
+                
+                case 8:
+                    input.close();
+                    System.exit(0);
+                    break;
+            }
+        }
         
-        System.out.println("\nEnter Characters For The Iterative Version");
-        String str2 = input.nextLine();
-        input.close();
-
-        Stack<String> stack = new Stack<String>();
-
-        for (int i = 0; i < str2.length(); i++) {
-            stack.push(str2.substring(i, i + 1));
-        }
-
-        for(String s : stack) {
-            System.out.print(s);
-        }
     }
 
     /**
@@ -112,6 +184,7 @@ public class Uppgift2 {
 
             Item item = first.item;
             first = first.next;
+            n--;
             return item;
         }
 
