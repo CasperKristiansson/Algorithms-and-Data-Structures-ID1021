@@ -1,9 +1,3 @@
-/*Implement the above program in JAVA (both iterative and recursive) using one of the
-ADTs suggested in Algorithms ch. 1.3 for the iterative version.
-https://algs4.cs.princeton.edu/13stacks/
-https://introcs.cs.princeton.edu/java/43stack/Stack.java
-*/
-
 /*
 Author: Casper Kristiansson
 Code Generated: 2021-09-07
