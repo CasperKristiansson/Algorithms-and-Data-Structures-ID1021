@@ -4,6 +4,7 @@ Code Generated: 2021-09-08
 Code Updated: 2021-09-10
 Problem: Implement a generlized queue which can remove an element using a index.
 Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3.38 GeneralizedQueue
+TODO: PEAK??
 */
 import java.util.Iterator;
 import java.util.Scanner;
