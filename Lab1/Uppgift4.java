@@ -2,7 +2,7 @@
 Author: Casper Kristiansson
 Code Generated: 2021-09-07
 Code Updated: 2021-09-09
-Problem: Implement a generalized linked circular list which can insert and remove elements
+Problem: Implement a generic linked circular list which can insert and remove elements
 from both the start and the end of the list.
 Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Queues
 */
@@ -24,10 +24,10 @@ public class Uppgift4 {
         while (true) {
             System.out.println("1: Queue Enqueue Characters");
             System.out.println("2: Queue Enqueue Word");
-            System.out.println("3: Queue Start Enqueue Character");
-            System.out.println("4: Queue Start Enqueue Word");
+            System.out.println("3: Queue Enqueue First Characters");
+            System.out.println("4: Queue Enqueue First Word");
             System.out.println("5: Queue Dequeue");
-            System.out.println("6: Queue Dequeue End");
+            System.out.println("6: Queue Dequeue Last");
             System.out.println("7: Queue IsEmpty");
             System.out.println("8: Queue Size");
             System.out.println("9: Queue Print");
@@ -57,31 +57,31 @@ public class Uppgift4 {
                     break;
                     
                 case 3:
-                    System.out.println("\nEnter a character to enqueue at the start");
+                    System.out.println("\nEnter a character to insert at the front");
                     String characters2 = input.nextLine();
                     for (int i = 0; i < characters2.length(); i++) {
-                        queue.enqueueStart(characters2.substring(i, i + 1));
+                        queue.enqueueFirst(characters2.substring(i, i + 1));
                     }
                     System.out.println(queue);
                     System.out.println("\n");
                     break;
 
                 case 4:
-                    System.out.println("\nEnter a word to enqueue at the start");
+                    System.out.println("\nEnter a word to insert at the front");
                     String word2 = input.nextLine();
-                    queue.enqueueStart(word2);
+                    queue.enqueueFirst(word2);
                     System.out.println(queue);
                     System.out.println("\n");
                     break;
 
                 case 5:
-                    System.out.println("\nDequeued: " + queue.dequeue());
+                    System.out.println("\nRemoved: " + queue.dequeue());
                     System.out.println(queue);
                     System.out.println("\n");
                     break;
 
                 case 6:
-                    System.out.println("\nDequeued: " + queue.dequeueEnd());
+                    System.out.println("\nRemoved: " + queue.dequeueLast());
                     System.out.println(queue);
                     System.out.println("\n");
                     break;
@@ -154,13 +154,12 @@ public class Uppgift4 {
             Node oldlast = last;
             last = new Node();
             last.item = item;
-            last.next = first;
             if (isEmpty()) {
                 first = last;
-                first.next = last;
             } else {
                 oldlast.next = last;
             }
+            last.next = first;
             n++;
         }
         
@@ -170,14 +169,19 @@ public class Uppgift4 {
          * 
          * @param item The item to be added to the queue.
          */
-        void enqueueStart(Item item) {
+        void enqueueFirst(Item item) {
             Node oldfirst = first;
             first = new Node();
             first.item = item;
             first.next = oldfirst;
-            last.next = first;
-            if (isEmpty())
+
+            if (isEmpty()) {
                 last = first;
+                first.next = last;
+            }
+            else {
+                last.next = first;
+            }
             n++;
         }
 
@@ -186,6 +190,7 @@ public class Uppgift4 {
          * to null. If the queue is not empty, we set the first node to the next
          * node and update the last node to the first node.
          * 
+         * @throws NoSuchElementException if the queue is empty
          * @return The item that was removed from the queue.
          */
         Item dequeue() {
@@ -213,7 +218,7 @@ public class Uppgift4 {
          * 
          * @return The item that was removed from the queue.
          */
-        Item dequeueEnd() {
+        Item dequeueLast() {
             if (isEmpty()) 
                 throw new NoSuchElementException("Queue is empty");
             
@@ -235,31 +240,32 @@ public class Uppgift4 {
         }
 
         /**
-         * If the stack is empty, return true. If the stack is not empty, return false.
-         * By comparing if the first node is null, we can determine if the stack is empty.
+         * If the queue is empty, return true. If the queue is not empty, return false.
+         * By comparing if the first node is null, we can determine if the queue is empty.
+         * we also check if the last is null.
          * 
-         * @return True if the stack is empty, false if the stack is not empty
+         * @return True if the queue is empty, false if the queue is not empty
          */
         boolean isEmpty() {
-            return first == null;
+            return first == null || last == null;
         }
 
         /**
-         * Returns the size of the stack.
+         * Returns the size of the queue.
          * 
-         * @return The size of the stack
+         * @return The size of the queue
          */
         int size() {
             return n;
         }
 
         /**
-         * Returns the string representation of the stack by using a StringBuilder.
-         * We first add a bracket to the string, and then we add the items of the stack
+         * Returns the string representation of the queue by using a StringBuilder.
+         * We first add a bracket to the string, and then we add the items of the queue
          * by using a for loop. We add a comma between the items. We add a bracket to the
          * end of the string which than is returned.
          * 
-         * @return The string representation of the stack
+         * @return The string representation of the queue
          */
         public String toString() {
             StringBuilder sb = new StringBuilder();
@@ -276,27 +282,27 @@ public class Uppgift4 {
             return sb.toString();
         }
         /**
-         * Returns an iterator for the stack.
+         * Returns an iterator for the queue.
          * 
-         * @return An iterator for the stack
+         * @return An iterator for the queue
          */
         public Iterator<Item> iterator() {
             return new ListIterator();
         }
 
         /**
-         * The class ListIterator is used to iterate through the stack. The method remove
+         * The class ListIterator is used to iterate through the queue. The method remove
          * is not implemented.
          * 
-         * @param <Item> The type of the stack, in this case a generalized stack
+         * @param <Item> The type of the queue, in this case a generalized queue
          */
         private class ListIterator implements Iterator<Item> {
             private Node current = first;
 
             /**
-             * The current node is set to the first node in the stack.
+             * The current node is set to the first node in the queue.
              * 
-             * @param first The first node in the stack
+             * @param first The first node in the queue
              */
             public void LinkedIterator(Node first) {
                 current = first;
@@ -312,9 +318,9 @@ public class Uppgift4 {
             }
 
             /**
-             * Returns the next item in the stack.
+             * Returns the next item in the queue.
              * 
-             * @return The next item in the stack
+             * @return The next item in the queue
              */
             public Item next() {
                 Item item = current.item;
