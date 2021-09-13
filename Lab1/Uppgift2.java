@@ -1,7 +1,7 @@
 /*
 Author: Casper Kristiansson
 Code Generated: 2021-09-07
-Code Updated: 2021-09-09
+Code Updated: 2021-09-013
 Problem: Implement a iterative and recursive method which reverses a string using
 one of the ADTs suggested in Algorithms ch. 1.3 for the iterative version.
 Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Stack
@@ -51,11 +51,11 @@ public class Uppgift2 {
                     for (int i = 0; i < str2.length(); i++) {
                         stack.push(str2.substring(i, i + 1));
                     }
-            
+
                     for(String s : stack) {
                         System.out.print(s);
                     }
-
+                    
                     System.out.println("\n");
                     break;
                 
@@ -66,21 +66,15 @@ public class Uppgift2 {
                     for (int i = 0; i < push.length(); i++) {
                         stack.push(push.substring(i, i + 1));
                     }
-            
-                    for(String s : stack) {
-                        System.out.print(s);
-                    }
+
+                    System.out.println(stack);
                     System.out.println("\n");
                     break;
                 
                 case 4:
                     System.out.print("\nCharacter removed: ");
                     System.out.println(stack.pop());
-
-
-                    for(String s : stack) {
-                        System.out.print(s);
-                    }
+                    System.out.println(stack);
                     System.out.println("\n");
                     break;
                 
@@ -98,10 +92,7 @@ public class Uppgift2 {
 
                 case 7:
                     System.out.println();
-                    for(String s : stack) {
-                        System.out.print(s);
-                    }    
-
+                    System.out.println(stack);
                     System.out.println("\n");
                     break;
                 
@@ -133,15 +124,25 @@ public class Uppgift2 {
      * The class Stack is a simple stack of generic items. In this case it is used to
      * reverses a string using iteration. The method creates a stack and pushes the
      * characters of the string into the stack. Because how the stack is implemented,
-     * when we iterate through the stack we are actually reading the characters from
-     * the reverse of the string.
+     * when we iterate through the stack we are actually reading the characters in reverse.
      * 
-     * @param <Item> The type of the stack, in this case a generalized type.
+     * @param <Item> The type of the stack, in this case a generic type.
      */
     public static class Stack<Item> implements Iterable<Item> {
+        private Node<Item> first;
         private int n;
-        private Node first;
         
+        /**
+         * Declaration of the Node class.
+         * The Node class is used to create a linked list of the stack.
+         * The Node class contains two references to the next node and the item.
+         */
+        private class Node<Item> {
+            private Item item;
+            private Node<Item> next;
+        }
+
+
         /**
          * Construct an empty stack by defining the first node as null,
          * and the size of the stack to 0.
@@ -151,24 +152,15 @@ public class Uppgift2 {
             n = 0;
         }
         
-        /**
-         * Declaration of the Node class.
-         * The Node class is used to create a linked list of the stack.
-         * The Node class contains two references to the next node and the item.
-         */
-        private class Node {
-            Item item;
-            Node next;
-        }
-
+        
         /**
          * Pushes an item onto the the first position in the stack.
          * 
          * @param item The item to be pushed onto the stack
          */
-        void push(Item item) {
-            Node oldfirst = first;
-            first = new Node();
+        public void push(Item item) {
+            Node<Item> oldfirst = first;
+            first = new Node<Item>();
             first.item = item;
             first.next = oldfirst;
             n++;
@@ -181,9 +173,7 @@ public class Uppgift2 {
          * @return The item at the first position in the stack
          */
         Item pop() {
-            if (n == 0)
-                throw new NoSuchElementException("Stack Underflow");
-
+            if (isEmpty()) throw new NoSuchElementException("Stack is empty");
             Item item = first.item;
             first = first.next;
             n--;
@@ -210,6 +200,36 @@ public class Uppgift2 {
         }
 
         /**
+         * Returns a string to represent each element in the stack.
+         * 
+         * @return A string to represent each element in the stack
+         */
+        public String toString() {
+            Node<Item> current = first;
+            StringBuilder sb = new StringBuilder();
+            sb.append("[");
+            for (int i = 0; i < n; i++) {
+                sb.append(current.item);
+                current = current.next;
+                if (i < n - 1)
+                    sb.append(", ");
+            }
+            sb.append("]");
+            return sb.toString();
+        }
+
+        /**
+         * Peeks at the item at the first position in the stack.
+         * 
+         * @throws NoSuchElementException if the stack is empty
+         * @return The item at the first position in the stack
+         */
+        public Item peek() {
+            if (isEmpty()) throw new NoSuchElementException("Stack underflow");
+            return first.item;
+        }
+
+        /**
          * Returns an iterator for the stack.
          * 
          * @return An iterator for the stack
@@ -225,7 +245,7 @@ public class Uppgift2 {
          * @param <Item> The type of the stack, in this case a generalized stack
          */
         private class ListIterator implements Iterator<Item> {
-            private Node current = first;
+            private Node<Item> current = first;
             
             /**
              * The current node is set to the first node in the stack.
@@ -248,9 +268,11 @@ public class Uppgift2 {
             /**
              * Returns the next item in the stack.
              * 
+             * @throws NoSuchElementException if the stack is empty
              * @return The next item in the stack
              */
             public Item next() {
+                if (!hasNext()) throw new NoSuchElementException("The stack is empty");
                 Item item = current.item;
                 current = current.next;
                 return item;
