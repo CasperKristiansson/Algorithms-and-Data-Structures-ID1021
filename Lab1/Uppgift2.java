@@ -30,7 +30,8 @@ public class Uppgift2 {
             System.out.println("5: Stack IsEmpty");
             System.out.println("6: Stack Size");
             System.out.println("7: Stack Print");
-            System.out.println("8: Exit Program");
+            System.out.println("8: Stack Peek");
+            System.out.println("9: Exit Program");
             
             int choice = input.nextInt();
             input.nextLine();
@@ -96,12 +97,17 @@ public class Uppgift2 {
                     break;
                 
                 case 8:
+                    System.out.println();
+                    System.out.println(stack.peek());
+                    System.out.println("\n");
+                    break;
+                
+                case 9:
                     input.close();
                     System.exit(0);
                     break;
             }
         }
-        
     }
 
     /**
