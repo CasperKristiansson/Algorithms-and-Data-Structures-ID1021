@@ -27,7 +27,8 @@ public class Uppgift5 {
             System.out.println("4: Queue IsEmpty");
             System.out.println("5: Queue Size");
             System.out.println("6: Queue Print");
-            System.out.println("7: Exit Program");
+            System.out.println("7: Queue Peek");
+            System.out.println("8: Exit Program");
 
             int choice = input.nextInt();
             input.nextLine();
@@ -74,8 +75,14 @@ public class Uppgift5 {
                     System.out.println(queue);
                     System.out.println("\n");
                     break;
-
+                
                 case 7:
+                    System.out.println();
+                    System.out.println(queue.peek());
+                    System.out.println("\n");
+                    break;
+
+                case 8:
                     input.close();
                     System.exit(0);
                     break;
