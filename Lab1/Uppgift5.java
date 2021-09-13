@@ -83,11 +83,11 @@ public class Uppgift5 {
         }
     }
     /**
-     * A class which implements a generalized queue using a linked list. The queue
-     * can be used to insert and remove elements from the queue. the remove
+     * A class which implements a generic queue using a linked list. The queue
+     * can be used to insert and remove elements from the queue. The remove
      * method can be used to remove an element from the queue using an index.
      * 
-     * @param <Item> The type of the queue, in this case a generalized type.
+     * @param <Item> The type of the queue, in this case a generic type.
      */
     public static class GeneralizedQueue<Item> implements Iterable<Item> {
         private Node<Item> first;
@@ -161,6 +161,7 @@ public class Uppgift5 {
                     current = current.next;
                     i++;
                 }
+                System.out.println(current.item);
                 item = current.next.item;
                 current.next = current.next.next;
             }
@@ -229,7 +230,7 @@ public class Uppgift5 {
          * @return An iterator for the stack
          */
         public Iterator<Item> iterator() {
-            return new ListIterator();
+            return new LinkedIterator(first);
         }
 
         /**
@@ -238,15 +239,15 @@ public class Uppgift5 {
          * 
          * @param <Item> The type of the stack, in this case a generalized stack
          */
-        private class ListIterator implements Iterator<Item> {
-            private Node<Item> current = first;
+        private class LinkedIterator implements Iterator<Item> {
+            private Node<Item> current;
             
             /**
              * The current node is set to the first node in the stack.
              * 
              * @param first The first node in the stack
              */
-            public void LinkedIterator(Node<Item> first) {
+            public LinkedIterator(Node<Item> first) {
                 current = first;
             }
 
@@ -271,11 +272,6 @@ public class Uppgift5 {
                 current = current.next;
                 return item;
             }
-
-            /**
-             * The remove method is not implemented.
-             */
-            public void remove() {  }
         }
     }
 }
