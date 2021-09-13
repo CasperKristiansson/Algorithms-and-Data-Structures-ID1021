@@ -170,25 +170,27 @@ public class Uppgift6 {
          * through each note we can compare the item of it and sort it
          * accordingly. We typecast the node.item to convert it to
          * a integer. 
+         * TODO: NEED TO AT THE ADDRESS EXCHANGE ASWEEL
          */
         public void bubbleSort() {
-        Node current = first, index = null;
-        Item temp;
-  
-        while (current != null) {
-            index = current.next;
+            Node current = first;
+            Node index = null;
+            Item temp;
+    
+            while (current != null) {
+                index = current.next;
 
-            while (index != null) {
-                if ((Integer)current.item > (Integer)index.item) {
-                    temp = current.item;
-                    current.item = index.item;
-                    index.item = temp;
+                while (index != null) {
+                    if ((Integer)current.item > (Integer)index.item) {
+                        temp = current.item;
+                        current.item = index.item;
+                        index.item = temp;
+                    }
+                    index = index.next;
                 }
-                index = index.next;
+                current = current.next;
             }
-            current = current.next;
         }
-    }
 
         /**
          * If the queue is empty, return true. If the queue is not empty, return false.
