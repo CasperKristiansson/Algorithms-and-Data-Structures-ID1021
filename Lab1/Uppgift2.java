@@ -222,7 +222,7 @@ public class Uppgift2 {
          * @return The item at the first position in the stack
          */
         public Item peek() {
-            if (isEmpty()) throw new NoSuchElementException("Stack underflow");
+            if (isEmpty()) throw new NoSuchElementException("Stack is empty");
             return first.item;
         }
 
@@ -244,14 +244,14 @@ public class Uppgift2 {
         private class LinkedIterator implements Iterator<Item> {
             private Node<Item> current;
             
-            public LinkedIterator(Uppgift2.Stack.Node<Item> first) {
-            }
-
             /**
              * The current node is set to the first node in the stack.
              * 
              * @param first The first node in the stack
              */
+            public LinkedIterator(Node<Item> first) {
+                current = first;
+            }
 
             /**
              * Returns true if the iterator has a next item, otherwise false.
@@ -274,11 +274,6 @@ public class Uppgift2 {
                 current = current.next;
                 return item;
             }
-
-            /**
-             * The remove method is not implemented.
-             */
-            public void remove() {  }
         }
     }
 }

@@ -1,47 +1,121 @@
-/*Implement a program which takes as input a series of parentheses , that is a series
-of the characters: '(', ')', '[', ']', '{', '}'. The program should check if the parentheses
-are "balanced" or not. Also show the time and memory complexity of the algorithm.
-
-Balanced: (([{}]){}[])
-Not balanced: (([{)}]){}[])}
-
-if emty return true
-TODO: Dubbel checka vad listiterator är rätt
-TODO: Kolla om man kan använda for each för alla prints out istället för tostrig
-TODO: Kolla canvas om circular list är implementerat rätt
-
-Time Complexity: O(n) -> Linear Complexity
-Auxiliary Space: O(n) for stack, Space Complexity = Auxiliary Space + Input space
+/**
+ * @author Casper Kristiansson
+ * Code Generated: 2021-09-08
+ * Code Updated: 2021-09-13
+ * Problem: Implement a function to check if a string has balanced parentheses.
+ * Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Stack
+ * 
+ * Time Complexity: O(n) -> Linear Complexity
+ * Auxiliary Space: O(n) for the stack in isBalanced
+ * Space complexity: O(n) for the normal stack
 */
 import java.util.Scanner;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
 public class Uppgift7 {
+    /** 
+     * A test for function isBalanced to check if the parentheses are balanced
+     * The test also tests the other functions of the stack.
+     * 
+     * @param args command line arguments
+     */
     public static void main(String[] args) {
-        String input = "(([{}]){}[])";
+        Stack<String> stack = new Stack<String>();
+        Scanner input = new Scanner(System.in);
 
-        System.out.println(parenthesesBalanced(input));
+        while (true) {
+            System.out.println("1: Parentheses Balance Check");
+            System.out.println("2: Stack Push");
+            System.out.println("3: Stack Pop");
+            System.out.println("4: Stack IsEmpty");
+            System.out.println("5: Stack Size");
+            System.out.println("6: Stack Print");
+            System.out.println("7: Exit Program");
+            
+            int choice = input.nextInt();
+            input.nextLine();
+
+            switch (choice) {    
+                case 1:
+                    System.out.println("\nEnter Parentheses to check if they are balanced");
+                    String parentheses = input.nextLine();
+                    System.out.println(isBalanced(parentheses) ? "Balanced" : "Not Balanced");
+                    System.out.println("\n");
+                    break;
+
+                case 2:
+                    System.out.println("\nEnter Characters to store in the stack");
+                    String push = input.nextLine();
+
+                    for (int i = 0; i < push.length(); i++) {
+                        stack.push(push.substring(i, i + 1));
+                    }
+
+                    System.out.println(stack);
+                    System.out.println("\n");
+                    break;
+                
+                case 3:
+                    System.out.print("\nCharacter removed: ");
+                    System.out.println(stack.pop());
+                    System.out.println(stack);
+                    System.out.println("\n");
+                    break;
+                
+                case 4:
+                    System.out.print("\nThe stack is empty: ");
+                    System.out.println(stack.isEmpty());
+                    System.out.println("\n");
+                    break;
+                
+                case 5:
+                    System.out.print("\nThe stack size is: ");
+                    System.out.println(stack.size());
+                    System.out.println("\n");
+                    break;
+
+                case 6:
+                    System.out.println();
+                    System.out.println(stack);
+                    System.out.println("\n");
+                    break;
+                
+                case 7:
+                    input.close();
+                    System.exit(0);
+                    break;
+            }
+        }
     }
 
-    public static boolean parenthesesBalanced(String input) {
+    /**
+     * Checks if the parentheses are balanced by using a stack. If its a open parenthesis it is
+     * pushed onto the stack.If its a closed parenthesis we check if the top of the stack is
+     * a open parenthesis. If it is we pop it off the stack. If the stack is empty or the top of
+     * the stack is not a open parenthesis we return false.
+     * 
+     * @param parentheses the string to check if it is balanced
+     * @return true if the parentheses are balanced, false if not
+     */
+    public static boolean isBalanced(String parentheses) {
         Stack<Character> stack = new Stack<Character>();
-        for (int i = 0; i < input.length(); i++) {
-            if (input.charAt(i) == '(' || input.charAt(i) == '[' || input.charAt(i) == '{') {
-                stack.push(input.charAt(i)); 
+        for (int i = 0; i < parentheses.length(); i++) {
+            if (parentheses.charAt(i) == '(' || parentheses.charAt(i) == '[' || parentheses.charAt(i) == '{') {
+                stack.push(parentheses.charAt(i)); 
             }
             else {
                 if (stack.isEmpty())
                     return false;
-                if (input.charAt(i) == ')') {
+                if (parentheses.charAt(i) == ')') {
                     if (stack.pop() != '(')
                         return false;
                 }
-                else if (input.charAt(i) == '}') {
+                else if (parentheses.charAt(i) == '}') {
                     if (stack.pop() != '{')
                         return false;
                 }
-                else if (input.charAt(i) == ']') {
+                else if (parentheses.charAt(i) == ']') {
                     if (stack.pop() != '[')
                         return false;
                 }
@@ -51,18 +125,26 @@ public class Uppgift7 {
     }
 
     /**
-     * The class Stack is a simple stack of generic items. In this case it is used to
-     * reverses a string using iteration. The method creates a stack and pushes the
-     * characters of the string into the stack. Because how the stack is implemented,
-     * when we iterate through the stack we are actually reading the characters from
-     * the reverse of the string.
+     * The class Stack is a simple stack of generic items. The class represents LIFO
+     * (Last in first out) It supports the stack operations such as push, pop, peek, isEmpty,
+     * size toString and peak. 
      * 
-     * @param <Item> The type of the stack, in this case a generalized type.
+     * @param <Item> The type of the stack, in this case a generic type.
      */
     public static class Stack<Item> implements Iterable<Item> {
+        private Node<Item> first;
         private int n;
-        private Node first;
         
+        /**
+         * Declaration of the Node class.
+         * The Node class is used to create a linked list of the stack.
+         * The Node class contains two references to the next node and the item.
+         */
+        private static class Node<Item> {
+            private Item item;
+            private Node<Item> next;
+        }
+
         /**
          * Construct an empty stack by defining the first node as null,
          * and the size of the stack to 0.
@@ -73,23 +155,13 @@ public class Uppgift7 {
         }
         
         /**
-         * Declaration of the Node class.
-         * The Node class is used to create a linked list of the stack.
-         * The Node class contains two references to the next node and the item.
-         */
-        private class Node {
-            Item item;
-            Node next;
-        }
-
-        /**
          * Pushes an item onto the the first position in the stack.
          * 
          * @param item The item to be pushed onto the stack
          */
-        void push(Item item) {
-            Node oldfirst = first;
-            first = new Node();
+        public void push(Item item) {
+            Node<Item> oldfirst = first;
+            first = new Node<Item>();
             first.item = item;
             first.next = oldfirst;
             n++;
@@ -102,9 +174,7 @@ public class Uppgift7 {
          * @return The item at the first position in the stack
          */
         Item pop() {
-            if (n == 0)
-                throw new NoSuchElementException("Stack Underflow");
-
+            if (isEmpty()) throw new NoSuchElementException("Stack is empty");
             Item item = first.item;
             first = first.next;
             n--;
@@ -131,29 +201,58 @@ public class Uppgift7 {
         }
 
         /**
+         * Returns a string to represent each element in the stack.
+         * 
+         * @return A string to represent each element in the stack
+         */
+        public String toString() {
+            Node<Item> current = first;
+            StringBuilder sb = new StringBuilder();
+            sb.append("[");
+            for (int i = 0; i < n; i++) {
+                sb.append(current.item);
+                current = current.next;
+                if (i < n - 1)
+                    sb.append(", ");
+            }
+            sb.append("]");
+            return sb.toString();
+        }
+
+        /**
+         * Peeks at the item at the first position in the stack.
+         * 
+         * @throws NoSuchElementException if the stack is empty
+         * @return The item at the first position in the stack
+         */
+        public Item peek() {
+            if (isEmpty()) throw new NoSuchElementException("Stack is empty");
+            return first.item;
+        }
+
+        /**
          * Returns an iterator for the stack.
          * 
          * @return An iterator for the stack
          */
         public Iterator<Item> iterator() {
-            return new ListIterator();
+            return new LinkedIterator(first);
         }
 
         /**
-         * The class ListIterator is used to iterate through the stack. The method remove
-         * is not implemented.
+         * The class ListIterator is used to iterate through the stack.
          * 
-         * @param <Item> The type of the stack, in this case a generalized stack
+         * @param <Item> The type of the stack, in this case a generic stack
          */
-        private class ListIterator implements Iterator<Item> {
-            private Node current = first;
+        private class LinkedIterator implements Iterator<Item> {
+            private Node<Item> current;
             
             /**
              * The current node is set to the first node in the stack.
              * 
              * @param first The first node in the stack
              */
-            public void LinkedIterator(Node first) {
+            public LinkedIterator(Node<Item> first) {
                 current = first;
             }
 
@@ -169,18 +268,15 @@ public class Uppgift7 {
             /**
              * Returns the next item in the stack.
              * 
+             * @throws NoSuchElementException if the stack is empty
              * @return The next item in the stack
              */
             public Item next() {
+                if (!hasNext()) throw new NoSuchElementException("The stack is empty");
                 Item item = current.item;
                 current = current.next;
                 return item;
             }
-
-            /**
-             * The remove method is not implemented.
-             */
-            public void remove() {  }
         }
     }
 }

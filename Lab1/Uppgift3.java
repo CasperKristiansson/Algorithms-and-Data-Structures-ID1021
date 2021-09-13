@@ -228,24 +228,24 @@ public class Uppgift3 {
          * @return An iterator for the stack
          */
         public Iterator<Item> iterator() {
-            return new ListIterator();
+            return new LinkedIterator(first);
         }
 
         /**
-         * The class ListIterator is used to iterate through the stack. The method remove
+         * The class LinkedIterator is used to iterate through the stack. The method remove
          * is not implemented.
          * 
          * @param <Item> The type of the stack, in this case a generalized stack
          */
-        private class ListIterator implements Iterator<Item> {
-            private Node<Item> current = first;
+        private class LinkedIterator implements Iterator<Item> {
+            private Node<Item> current;
             
             /**
              * The current node is set to the first node in the stack.
              * 
              * @param first The first node in the stack
              */
-            public void LinkedIterator(Node<Item> first) {
+            public LinkedIterator(Node<Item> first) {
                 current = first;
             }
 
@@ -270,11 +270,6 @@ public class Uppgift3 {
                 current = current.next;
                 return item;
             }
-
-            /**
-             * The remove method is not implemented.
-             */
-            public void remove() {  }
         }
     }
 }
