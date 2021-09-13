@@ -27,7 +27,8 @@ public class Uppgift6 {
             System.out.println("4: Queue IsEmpty");
             System.out.println("5: Queue Size");
             System.out.println("6: Queue Print");
-            System.out.println("7: Exit Program");
+            System.out.println("7: Queue Peek");
+            System.out.println("8: Exit Program");
 
             int choice = input.nextInt();
             input.nextLine();
@@ -74,8 +75,14 @@ public class Uppgift6 {
                     System.out.println(queue);
                     System.out.println("\n");
                     break;
-
+                
                 case 7:
+                    System.out.println();
+                    System.out.println(queue.peek());
+                    System.out.println("\n");
+                    break;
+
+                case 8:
                     input.close();
                     System.exit(0);
                     break;
@@ -83,11 +90,13 @@ public class Uppgift6 {
         }
     }
     /**
-     * A class which implements a generalized queue using a linked list. The queue
-     * can be used to insert and remove elements from the queue. the remove
-     * method can be used to remove an element from the queue using an index.
+     * A class which implements a generic queue using a linked list. But for this
+     * exercise only integers values are entered because the goal is to sort
+     * the queue in ascending order. The queue can be used to insert and remove
+     * elements from the queue. The remove method can be used to remove an element
+     * from the queue using an index.
      * 
-     * @param <Item> The type of the queue, in this case a generalized type.
+     * @param <Item> The type of the queue, in this case a generic type.
      */
     public static class GeneralizedQueue<Item> implements Iterable<Item> {
         private Node<Item> first;
@@ -150,8 +159,8 @@ public class Uppgift6 {
         }
 
         /**
-         * If the is either bigger than the size of the linked list
-         * or if index is less than one we throw a exception. By using a 
+         * If the index is either bigger than the size of the linked list
+         * or if it is less than one we throw a exception. By using a 
          * while loop we can navigate to the node before the one at the index.
          * We can than set the current node to the next.next node.
          * 

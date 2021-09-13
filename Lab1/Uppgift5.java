@@ -142,8 +142,8 @@ public class Uppgift5 {
         }
 
         /**
-         * If the is either bigger than the size of the linked list
-         * or if index is less than one we throw a exception. By using a 
+         * If the index is either bigger than the size of the linked list
+         * or if it is less than one we throw a exception. By using a 
          * while loop we can navigate to the node before the one at the index.
          * We can than set the current node to the next.next node.
          * 
