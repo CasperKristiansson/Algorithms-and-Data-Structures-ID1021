@@ -1,7 +1,7 @@
 /*
 Author: Casper Kristiansson
 Code Generated: 2021-09-07
-Code Updated: 2021-09-09
+Code Updated: 2021-09-013
 Problem: Implement a FIFO-queue based on a double linked circular list
 Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Queues,
 https://media.geeksforgeeks.org/wp-content/uploads/Insertion-in-a-list.png
@@ -94,8 +94,8 @@ public class Uppgift3 {
      * @param <Item> The type of the queue, in this case a generalized type.
      */
     public static class Queue<Item> implements Iterable<Item> {
-        private Node first;
-        private Node last;
+        private Node<Item> first;
+        private Node<Item> last;
         private int n;
 
         /**
@@ -111,10 +111,10 @@ public class Uppgift3 {
          * Declaration of the Node class. The Node class contains three
          * references to the next node, the previous node and the item.
          */
-        private class Node {
-            Item item;
-            Node next;
-            Node prev;
+        private static class Node<Item> {
+            private Item item;
+            private Node<Item> next;
+            private Node<Item> prev;
         }
 
         /**
@@ -126,8 +126,8 @@ public class Uppgift3 {
          * @param item The item to be added to the queue.
          */
         void enqueue(Item item) {
-            Node oldlast = last;
-            last = new Node();
+            Node<Item> oldlast = last;
+            last = new Node<Item>();
             last.item = item;
             last.next = first;
             last.prev = oldlast;
@@ -153,7 +153,7 @@ public class Uppgift3 {
          */
         Item dequeue() {
             if (isEmpty()) 
-                throw new NoSuchElementException("Queue is empty");
+                throw new NoSuchElementException("The queue is empty");
 
             Item item = first.item;
 
@@ -198,7 +198,7 @@ public class Uppgift3 {
         public String toString() {
             StringBuilder sb = new StringBuilder();
             sb.append("[");
-            Node current = first;
+            Node<Item> current = first;
             for(int i = 0; i < n; i++) {
                 sb.append(current.item);
                 current = current.next;
@@ -208,6 +208,17 @@ public class Uppgift3 {
             }
             sb.append("]");
             return sb.toString();
+        }
+
+        /**
+         * Peeks at the item at the first position in the stack.
+         * 
+         * @throws NoSuchElementException if the stack is empty
+         * @return The item at the first position in the stack
+         */
+        public Item peek() {
+            if (isEmpty()) throw new NoSuchElementException("The queue is empty");
+            return first.item;
         }
 
         /**
@@ -226,14 +237,14 @@ public class Uppgift3 {
          * @param <Item> The type of the stack, in this case a generalized stack
          */
         private class ListIterator implements Iterator<Item> {
-            private Node current = first;
-
+            private Node<Item> current = first;
+            
             /**
              * The current node is set to the first node in the stack.
              * 
              * @param first The first node in the stack
              */
-            public void LinkedIterator(Node first) {
+            public void LinkedIterator(Node<Item> first) {
                 current = first;
             }
 
@@ -249,9 +260,11 @@ public class Uppgift3 {
             /**
              * Returns the next item in the stack.
              * 
+             * @throws NoSuchElementException if the stack is empty
              * @return The next item in the stack
              */
             public Item next() {
+                if (!hasNext()) throw new NoSuchElementException("The queue is empty");
                 Item item = current.item;
                 current = current.next;
                 return item;

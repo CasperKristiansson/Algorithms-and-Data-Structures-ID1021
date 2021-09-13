@@ -142,7 +142,6 @@ public class Uppgift2 {
             private Node<Item> next;
         }
 
-
         /**
          * Construct an empty stack by defining the first node as null,
          * and the size of the stack to 0.
@@ -151,7 +150,6 @@ public class Uppgift2 {
             first = null;
             n = 0;
         }
-        
         
         /**
          * Pushes an item onto the the first position in the stack.
@@ -252,7 +250,7 @@ public class Uppgift2 {
              * 
              * @param first The first node in the stack
              */
-            public void LinkedIterator(Node first) {
+            public void LinkedIterator(Node<Item> first) {
                 current = first;
             }
 
