@@ -169,6 +169,7 @@ public class Uppgift3 {
             n--;
             return item;
         }
+        
         /**
          * If the stack is empty, return true. If the stack is not empty, return false.
          * By comparing the first node with null.

@@ -1,9 +1,9 @@
-/*
-Author: Casper Kristiansson
-Code Generated: 2021-09-08
-Code Updated: 2021-09-13
-Problem: Implement a generalized queue which can remove an element using a index.
-Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3.38 GeneralizedQueue
+/**
+ * @author Casper Kristiansson
+ * Code Generated: 2021-09-08
+ * Code Updated: 2021-09-13
+ * Problem: Implement a generalized queue which can remove an element using a index.
+ * Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3.38 GeneralizedQueue
 */
 import java.util.Iterator;
 import java.util.Scanner;
@@ -11,7 +11,7 @@ import java.util.NoSuchElementException;
 
 public class Uppgift5 {
     /** 
-     * A test for the Queue class. The test is build using 
+     * A test for the GeneralizedQueue class. The test is build using 
      * cases which the user can choose which method to test and use.
      * 
      * @param args command line arguments
@@ -140,7 +140,7 @@ public class Uppgift5 {
          * while loop we can navigate to the node before the one at the index.
          * We can than set the current node to the next.next node.
          * 
-         * @throws NoSuchElementException if the queue is empty
+         * @throws NoSuchElementException if the index is out of bounds.
          * @return the item that was removed from the queue
          */
         public Item delete(int index) {

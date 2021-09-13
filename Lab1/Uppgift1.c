@@ -1,9 +1,9 @@
-/*
-Author: Casper Kristiansson
-Code Generated: 2021-09-07
-Code Updated: 2021-09-013
-Problem: Implement a iterative and recursive method to reverse a string.
-Sources: None
+/**
+ * @author Casper Kristiansson
+ * Code Generated: 2021-09-07
+ * Code Updated: 2021-09-13
+ * Problem: Implement a iterative and recursive method to reverse a string.
+ * Sources: None
 */
 
 #include <stdio.h>

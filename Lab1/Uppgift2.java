@@ -1,12 +1,11 @@
-/*
-Author: Casper Kristiansson
-Code Generated: 2021-09-07
-Code Updated: 2021-09-013
-Problem: Implement a iterative and recursive method which reverses a string using
-one of the ADTs suggested in Algorithms ch. 1.3 for the iterative version.
-Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Stack
+/**
+ * @author Casper Kristiansson
+ * Code Generated: 2021-09-07
+ * Code Updated: 2021-09-13
+ * Problem: Implement a iterative and recursive method which reverses a string using
+ * one of the ADTs suggested in Algorithms ch. 1.3 for the iterative version.
+ * Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Stack
 */
-
 import java.util.Scanner;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
@@ -233,7 +232,7 @@ public class Uppgift2 {
          * @return An iterator for the stack
          */
         public Iterator<Item> iterator() {
-            return new ListIterator();
+            return new LinkedIterator(first);
         }
 
         /**
@@ -242,17 +241,17 @@ public class Uppgift2 {
          * 
          * @param <Item> The type of the stack, in this case a generalized stack
          */
-        private class ListIterator implements Iterator<Item> {
-            private Node<Item> current = first;
+        private class LinkedIterator implements Iterator<Item> {
+            private Node<Item> current;
             
+            public LinkedIterator(Uppgift2.Stack.Node<Item> first) {
+            }
+
             /**
              * The current node is set to the first node in the stack.
              * 
              * @param first The first node in the stack
              */
-            public void LinkedIterator(Node<Item> first) {
-                current = first;
-            }
 
             /**
              * Returns true if the iterator has a next item, otherwise false.
