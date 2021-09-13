@@ -137,7 +137,7 @@ public class Uppgift2 {
          * The Node class is used to create a linked list of the stack.
          * The Node class contains two references to the next node and the item.
          */
-        private class Node<Item> {
+        private static class Node<Item> {
             private Item item;
             private Node<Item> next;
         }
