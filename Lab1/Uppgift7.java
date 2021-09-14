@@ -2,8 +2,13 @@
  * @author Casper Kristiansson
  * Code Generated: 2021-09-08
  * Code Updated: 2021-09-13
- * Problem: Implement a function to check if a string has balanced parentheses.
- * Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Stack
+ * Problem: Implement a function to check if a string has balanced parentheses. This algorithm
+ * is developed using a stack. We iterate through the string and push the opening parentheses onto
+ * the stack. If we encounter a closing parentheses we pop the stack and check if the popped
+ * value is the same type as the closing parentheses. If it is not the same type we return false.
+ * If the stack is empty we return true. If we encounter a closing parentheses and the stack is empty
+ * we return false.
+ * Sources: https://algs4.cs.princeton.edu/13stacks/, Algorithms 4th Edition, Section 1.3 Stack
  * 
  * Time Complexity: O(n) -> Linear Complexity
  * Auxiliary Space: O(n) for the stack in isBalanced
@@ -189,10 +194,10 @@ public class Uppgift7 {
         }
 
         /**
-         * If the stack is empty, return true. If the stack is not empty, return false.
-         * By comparing if the first node is null, we can determine if the stack is empty.
+         * By comparing if the first and element in the queue is null, we can
+         * determine if the queue is empty or not.
          * 
-         * @return True if the stack is empty, false if the stack is not empty
+         * @return True if the queue is empty, false if the queue is not empty
          */
         boolean isEmpty() {
             return first == null;
@@ -247,7 +252,7 @@ public class Uppgift7 {
         }
 
         /**
-         * The class ListIterator is used to iterate through the stack.
+         * The class LinkedIterator is used to iterate through the stack.
          * 
          * @param <Item> The type of the stack, in this case a generic stack
          */

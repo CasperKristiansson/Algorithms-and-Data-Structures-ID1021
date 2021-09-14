@@ -1,10 +1,11 @@
 /**
  * @author Casper Kristiansson
  * Code Generated: 2021-09-07
- * Code Updated: 2021-09-13
+ * Code Updated: 2021-09-14
  * Problem: Implement a iterative and recursive method which reverses a string using
- * one of the ADTs suggested in Algorithms ch. 1.3 for the iterative version.
- * Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Stack
+ * one of the ADTs suggested in Algorithms ch. 1.3 for the iterative version. In this program
+ * the author choose to use Stack.
+ * Sources: https://algs4.cs.princeton.edu/13stacks/, Algorithms 4th Edition, Section 1.3 Stack
 */
 import java.util.Scanner;
 import java.util.Iterator;
@@ -15,6 +16,7 @@ public class Uppgift2 {
      * A test for the recursive version of the program and
      * the iterative version of the program. The test is built using
      * cases which the user can choose which method to test and use.
+     * The tests covers all of the methods in the program.
      * 
      * @param args command line arguments
      */
@@ -52,10 +54,10 @@ public class Uppgift2 {
                         stack.push(str2.substring(i, i + 1));
                     }
 
-                    for(String s : stack) {
-                        System.out.print(s);
+                    for (int i = 0; i < str2.length(); i++) {
+                        System.out.print(stack.pop());
                     }
-                    
+
                     System.out.println("\n");
                     break;
                 
@@ -72,21 +74,18 @@ public class Uppgift2 {
                     break;
                 
                 case 4:
-                    System.out.print("\nCharacter removed: ");
-                    System.out.println(stack.pop());
+                    System.out.println("\nCharacter removed: " + stack.pop());
                     System.out.println(stack);
                     System.out.println("\n");
                     break;
                 
                 case 5:
-                    System.out.print("\nThe stack is empty: ");
-                    System.out.println(stack.isEmpty());
+                    System.out.print("\nThe stack is empty: " + stack.isEmpty());
                     System.out.println("\n");
                     break;
                 
                 case 6:
-                    System.out.print("\nThe stack size is: ");
-                    System.out.println(stack.size());
+                    System.out.print("\nThe stack size is: " + stack.size());
                     System.out.println("\n");
                     break;
 
@@ -98,7 +97,7 @@ public class Uppgift2 {
                 
                 case 8:
                     System.out.println();
-                    System.out.println(stack.peek());
+                    System.out.println("First item: " + stack.peek());
                     System.out.println("\n");
                     break;
                 
@@ -138,9 +137,9 @@ public class Uppgift2 {
         private int n;
         
         /**
-         * Declaration of the Node class.
-         * The Node class is used to create a linked list of the stack.
-         * The Node class contains two references to the next node and the item.
+         * Declaration of the Node class. The Node class contains
+         * two references to the next node and the item. This two references
+         * is what each node will contain, the next address and the current item.
          */
         private static class Node<Item> {
             private Item item;
@@ -184,8 +183,8 @@ public class Uppgift2 {
         }
 
         /**
-         * If the stack is empty, return true. If the stack is not empty, return false.
-         * By comparing if the first node is null, we can determine if the stack is empty.
+         * By comparing if the first element in the stack is null, we can
+         * determine if the stack is empty or not.
          * 
          * @return True if the stack is empty, false if the stack is not empty
          */
@@ -213,9 +212,9 @@ public class Uppgift2 {
             sb.append("[");
             for (int i = 0; i < n; i++) {
                 sb.append(current.item);
-                current = current.next;
                 if (i < n - 1)
                     sb.append(", ");
+                current = current.next;
             }
             sb.append("]");
             return sb.toString();
@@ -235,17 +234,16 @@ public class Uppgift2 {
         /**
          * Returns an iterator for the stack.
          * 
-         * @return An iterator for the stack
+         * @return An iterator for the stack by passing the first node
          */
         public Iterator<Item> iterator() {
             return new LinkedIterator(first);
         }
 
         /**
-         * The class ListIterator is used to iterate through the stack. The method remove
-         * is not implemented.
+         * The class LinkedIterator is used to iterate through the stack.
          * 
-         * @param <Item> The type of the stack, in this case a generalized stack
+         * @param <Item> The type of the stack, in this case a generic stack
          */
         private class LinkedIterator implements Iterator<Item> {
             private Node<Item> current;

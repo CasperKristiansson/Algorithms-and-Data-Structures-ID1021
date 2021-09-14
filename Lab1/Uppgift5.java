@@ -2,8 +2,11 @@
  * @author Casper Kristiansson
  * Code Generated: 2021-09-08
  * Code Updated: 2021-09-13
- * Problem: Implement a generalized queue which can remove an element using a index.
- * Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3.38 GeneralizedQueue
+ * Problem: Implement a generalized queue which can remove an element using a index. In this exercise
+ * the index will be started at the end of the queue, meaning that the most recent element will be
+ * 1. This can be achieved using while loop to stop at the right position, to than modified the node references.
+ * Otherwise the queue will be following the standard queue rules.
+ * Sources: https://algs4.cs.princeton.edu/13stacks/, Algorithms 4th Edition, Section 1.3.38 GeneralizedQueue
 */
 import java.util.Iterator;
 import java.util.Scanner;
@@ -13,6 +16,7 @@ public class Uppgift5 {
     /** 
      * A test for the GeneralizedQueue class. The test is build using 
      * cases which the user can choose which method to test and use.
+     * The test covers all of the methods in the Queue class.
      * 
      * @param args command line arguments
      */  
@@ -78,7 +82,7 @@ public class Uppgift5 {
                 
                 case 7:
                     System.out.println();
-                    System.out.println(queue.peek());
+                    System.out.println("First item: " + queue.peek());
                     System.out.println("\n");
                     break;
 
@@ -90,9 +94,9 @@ public class Uppgift5 {
         }
     }
     /**
-     * A class which implements a generic queue using a linked list. The queue
-     * can be used to insert and remove elements from the queue. The remove
-     * method can be used to remove an element from the queue using an index.
+     * The class Queue represents a modified queue of objects.
+     * The class is generic, which means that it can store objects of any type.
+     * The queue has a modified remove which allows the user to remove an element using an index.
      * 
      * @param <Item> The type of the queue, in this case a generic type.
      */
@@ -103,7 +107,8 @@ public class Uppgift5 {
 
         /**
          * Declaration of the Node class. The Node class contains two
-         * references to the next node and the item.
+         * references to the next node and the item. The next node contains
+         * the address of the next node.
          */
         private static class Node<Item> {
             private Item item;
@@ -144,8 +149,9 @@ public class Uppgift5 {
         /**
          * If the index is either bigger than the size of the linked list
          * or if it is less than one we throw a exception. By using a 
-         * while loop we can navigate to the node before the one at the index.
-         * We can than set the current node to the next.next node.
+         * for loop we can navigate to the node before the one at the index.
+         * We can than set the current node to the next.next node. Because if the goal
+         * is to remove the last node we need to set the last node to the node before last.
          * 
          * @throws NoSuchElementException if the index is out of bounds.
          * @return the item that was removed from the queue
@@ -162,26 +168,26 @@ public class Uppgift5 {
             }
             else {
                 Node<Item> current = first;
-                int i = 0;
-
-                while (i < index - 1) {
+                for(int i = 0; i < index - 1; i++) {
                     current = current.next;
-                    i++;
                 }
-                System.out.println(current.item);
+                if (current.next == last) {
+                    last = current;
+                }
                 item = current.next.item;
                 current.next = current.next.next;
             }
             n--;
             if (isEmpty()) {
                 last = null;
+                first = null;
             }
             return item;
         }
 
         /**
-         * If the queue is empty, return true. If the queue is not empty, return false.
-         * By comparing if the first node is null, we can determine if the queue is empty.
+         * By comparing if the first and element in the queue is null, we can
+         * determine if the queue is empty or not.
          * 
          * @return True if the queue is empty, false if the queue is not empty
          */
@@ -221,10 +227,10 @@ public class Uppgift5 {
         }
         
         /**
-         * Peeks at the item at the first position in the stack.
+         * Peeks at the item at the first position in the queue.
          * 
-         * @throws NoSuchElementException if the stack is empty
-         * @return The item at the first position in the stack
+         * @throws NoSuchElementException if the queue is empty
+         * @return The item at the first position in the queue
          */
         public Item peek() {
             if (isEmpty()) throw new NoSuchElementException("The queue is empty");
@@ -232,27 +238,26 @@ public class Uppgift5 {
         }
 
         /**
-         * Returns an iterator for the stack.
+         * Returns an iterator for the queue.
          * 
-         * @return An iterator for the stack
+         * @return An iterator for the queue
          */
         public Iterator<Item> iterator() {
             return new LinkedIterator(first);
         }
 
         /**
-         * The class ListIterator is used to iterate through the stack. The method remove
-         * is not implemented.
+         * The class ListIterator is used to iterate through the queue.
          * 
-         * @param <Item> The type of the stack, in this case a generalized stack
+         * @param <Item> The type of the queue, in this case a generic queue
          */
         private class LinkedIterator implements Iterator<Item> {
             private Node<Item> current;
             
             /**
-             * The current node is set to the first node in the stack.
+             * The current node is set to the first node in the queue.
              * 
-             * @param first The first node in the stack
+             * @param first The first node in the queue
              */
             public LinkedIterator(Node<Item> first) {
                 current = first;
@@ -268,10 +273,10 @@ public class Uppgift5 {
             }
 
             /**
-             * Returns the next item in the stack.
+             * Returns the next item in the queue.
              * 
-             * @throws NoSuchElementException if the stack is empty
-             * @return The next item in the stack
+             * @throws NoSuchElementException if the queue is empty
+             * @return The next item in the queue
              */
             public Item next() {
                 if (!hasNext()) throw new NoSuchElementException("The queue is empty");

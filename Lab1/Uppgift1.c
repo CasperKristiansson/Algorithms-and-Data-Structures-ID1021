@@ -1,19 +1,34 @@
 /**
  * @author Casper Kristiansson
  * Code Generated: 2021-09-07
- * Code Updated: 2021-09-13
- * Problem: Implement a iterative and recursive method to reverse a string.
+ * Code Updated: 2021-09-14
+ * Problem: Implement a iterative and recursive method to reverse a char array.
+ * The user can input and choose which word should be reversed. The iterative 
+ * version has a fixed length of 10.
  * Sources: None
+ * 
+ * Recursion - Good for when the code size needs to be small, time complexity
+ * could be very high. In our example the recursive version have the same as iterative
+ * version. O(n). Recursion also takes up more auxiliary space. Each recursive call
+ * the temporary variable will be created. But some times a recursive function
+ * could be more elegant.
+ * 
+ * Iterative - Good for when the code size needs to be small, time complexity could be
+ * very low. In our example the iterative version have the same as recursive version.
+ * O(n).
+ * 
+ * Because the recursive version is more elegant but more complex, the iterative version
+ * is a easier to understand and implement.
 */
 
 #include <stdio.h>
 
 int main() {
-    printf("Enter Characters For The Recursive Version\n");
-    recursive();
-    
-    printf("\nEnter Characters For The Iterative Version\n");
+    printf("Enter Characters For The Iterative Version\n");
     iterative();
+
+    printf("\nEnter Characters For The Recursive Version\n");
+    recursive();
     
     return 0;
 }
@@ -42,10 +57,9 @@ void iterative() {
 }
 
 /**
- * Recursive Version of the String Reversal which reverses the string
- * reading the input character. It than calls itself to read the next
- * character. When the end of the string is reached, (character == '\n')
- * the function returns. Which in turn prints the character in reverse.
+ * Recursive Version of the word reverse works by reading the input characters.
+ * It than calls itself to read the next character. When the end of the char is reached,
+ * (character == '\n') the function returns. Which in turn prints the characters in reverse.
  */
 void recursive() {
     int character = getchar();

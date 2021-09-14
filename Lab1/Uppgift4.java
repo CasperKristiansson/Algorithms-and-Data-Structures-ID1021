@@ -1,10 +1,13 @@
-/*
-Author: Casper Kristiansson
+/**
+@author Casper Kristiansson
 Code Generated: 2021-09-07
-Code Updated: 2021-09-09
+Code Updated: 2021-09-14
 Problem: Implement a generic linked circular list which can insert and remove elements
-from both the start and the end of the list.
-Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Queues
+from both the start and the end of the list. The author solved this by using creating a circular
+list which contains the address of the next node and the item of the current node. To implement the
+four methods to inset and remove from both the start and at the end of the queue, the first and last
+node were modified, to point to the right node.
+Sources: https://algs4.cs.princeton.edu/13stacks/, Algorithms 4th Edition, Section 1.3 Queues
 */
 import java.util.Scanner;
 import java.util.Iterator;
@@ -14,6 +17,7 @@ public class Uppgift4 {
     /** 
      * A test for the Queue class. The test is build using 
      * cases which the user can choose which method to test and use.
+     * The test covers all of the methods in the Queue class.
      * 
      * @param args command line arguments
      */  
@@ -31,7 +35,8 @@ public class Uppgift4 {
             System.out.println("7: Queue IsEmpty");
             System.out.println("8: Queue Size");
             System.out.println("9: Queue Print");
-            System.out.println("10: Exit Program");
+            System.out.println("10: Queue Peek");
+            System.out.println("11: Exit Program");
 
             int choice = input.nextInt();
             input.nextLine();
@@ -100,8 +105,15 @@ public class Uppgift4 {
                     System.out.println(queue);
                     System.out.println("\n");
                     break;
-
+                
                 case 10:
+                    System.out.println();
+                    System.out.println("First item: " + queue.peek());
+                    System.out.println("\n");
+                    break;
+
+                case 11:
+                    System.out.println("\n");
                     input.close();
                     System.exit(0);
                     break;
@@ -110,7 +122,7 @@ public class Uppgift4 {
     }
 
     /**
-     * The class Queue represents a first-in-first-out (FIFO) queue of objects.
+     * The class Queue represents modified queue.
      * The class is generic, which means that it can store objects of any type.
      * The dequeue method removes the element that has been on the queue the longest,
      * which is the first element inserted into the queue. The enqueue method adds an
@@ -120,8 +132,8 @@ public class Uppgift4 {
      * @param <Item> The type of the queue, in this case a generalized type.
      */
     public static class Queue<Item> implements Iterable<Item> {
-        private Node first;
-        private Node last;
+        private Node<Item> first;
+        private Node<Item> last;
         private int n;
         
         /**
@@ -135,11 +147,12 @@ public class Uppgift4 {
         }
         /**
          * Declaration of the Node class. The Node class contains two
-         * references to the next node and the item.
+         * references to the next node and the item. The next nodes contains
+         * the address of the next node.
          */
-        private class Node {
+        private static class Node<Item> {
             Item item;
-            Node next;
+            Node<Item> next;
         }
 
         /**
@@ -151,8 +164,8 @@ public class Uppgift4 {
          * @param item The item to be added to the queue.
          */
         void enqueue(Item item) {
-            Node oldlast = last;
-            last = new Node();
+            Node<Item> oldlast = last;
+            last = new Node<Item>();
             last.item = item;
             if (isEmpty()) {
                 first = last;
@@ -164,14 +177,16 @@ public class Uppgift4 {
         }
         
         /**
-         * We set the new item to the first node and if the queue is empty
-         * (first == null) we set the last node to the new node (first).
+         * To enqueue first we set the new node to the first node and if the
+         * queue is empty we set the last node to the new node (first) and the 
+         * next node of the new node to the last node. If the queue is not empty
+         * we set the next node of the new node to the first node.
          * 
          * @param item The item to be added to the queue.
          */
         void enqueueFirst(Item item) {
-            Node oldfirst = first;
-            first = new Node();
+            Node<Item> oldfirst = first;
+            first = new Node<Item>();
             first.item = item;
             first.next = oldfirst;
 
@@ -187,8 +202,9 @@ public class Uppgift4 {
 
         /**
          * If the queue only contains one node, we set the first and last node
-         * to null. If the queue is not empty, we set the first node to the next
-         * node and update the last node to the first node.
+         * to null. if the queue is empty we set first and last to null.
+         * If the queue is not empty we set the first node to the next node in the queue.
+         * We also set the last.next to the new first node.
          * 
          * @throws NoSuchElementException if the queue is empty
          * @return The item that was removed from the queue.
@@ -214,7 +230,8 @@ public class Uppgift4 {
         /**
          * If the queue only contains one node, we set the first and last node
          * to null. If the queue is not empty, we set the last node to the previous
-         * node and update the new last node to the first node.
+         * node and update the new last node to the first node. we can navigate to the
+         * next to last node using a while statement.
          * 
          * @return The item that was removed from the queue.
          */
@@ -229,7 +246,7 @@ public class Uppgift4 {
                 last = null;
             }
             else {
-                Node current = first;
+                Node<Item> current = first;
                 while(current.next != last) 
                     current = current.next;
                 current.next = first;
@@ -240,9 +257,19 @@ public class Uppgift4 {
         }
 
         /**
-         * If the queue is empty, return true. If the queue is not empty, return false.
-         * By comparing if the first node is null, we can determine if the queue is empty.
-         * we also check if the last is null.
+         * Peeks at the item at the first position in the stack.
+         * 
+         * @throws NoSuchElementException if the stack is empty
+         * @return The item at the first position in the stack
+         */
+        public Item peek() {
+            if (isEmpty()) throw new NoSuchElementException("Stack is empty");
+            return first.item;
+        }
+
+        /**
+         * By comparing if the first and element in the queue is null, we can
+         * determine if the queue is empty or not.
          * 
          * @return True if the queue is empty, false if the queue is not empty
          */
@@ -270,7 +297,7 @@ public class Uppgift4 {
         public String toString() {
             StringBuilder sb = new StringBuilder();
             sb.append("[");
-            Node current = first;
+            Node<Item> current = first;
             for(int i = 0; i < n; i++) {
                 sb.append(current.item);
                 current = current.next;
@@ -287,27 +314,25 @@ public class Uppgift4 {
          * @return An iterator for the queue
          */
         public Iterator<Item> iterator() {
-            return new ListIterator();
+            return new LinkedIterator(first);
         }
 
         /**
-         * The class ListIterator is used to iterate through the queue. The method remove
-         * is not implemented.
+         * The class LinkedIterator is used to iterate through the queue.
          * 
          * @param <Item> The type of the queue, in this case a generalized queue
          */
-        private class ListIterator implements Iterator<Item> {
-            private Node current = first;
+        private class LinkedIterator implements Iterator<Item> {
+            private Node<Item> current;
 
             /**
              * The current node is set to the first node in the queue.
              * 
              * @param first The first node in the queue
              */
-            public void LinkedIterator(Node first) {
+            public LinkedIterator(Node<Item> first) {
                 current = first;
             }
-
             /**
              * Returns true if the iterator has a next item, otherwise false.
              * 
@@ -327,11 +352,6 @@ public class Uppgift4 {
                 current = current.next;
                 return item;
             }
-
-            /**
-             * The remove method is not implemented.
-             */
-            public void remove() {  }
         }
     }
 }

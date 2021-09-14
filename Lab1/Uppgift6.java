@@ -1,9 +1,11 @@
 /**
  * @author Casper Kristiansson
  * Code Generated: 2021-09-07
- * Code Updated: 2021-09-13
- * Problem: Implement a ordered generalized queue which stores integers in ascending order.
- * Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3.38 GeneralizedQueue
+ * Code Updated: 2021-09-14
+ * Problem: Implement a ordered generalized queue which stores integers in ascending order. The queue is based on 
+ * a modified generalized queue which can delete elements using a index. The queue sort the elements when they are
+ * added to the queue. 
+ * Sources: https://algs4.cs.princeton.edu/13stacks/, Algorithms 4th Edition, Section 1.3.38 GeneralizedQueue
 */
 import java.util.Iterator;
 import java.util.Scanner;
@@ -13,6 +15,7 @@ public class Uppgift6 {
     /** 
      * A test for the GeneralizedQueue class. The test is build using 
      * cases which the user can choose which method to test and use.
+     * The test covers all of the methods in the Queue class.
      * 
      * @param args command line arguments
      */  
@@ -78,7 +81,7 @@ public class Uppgift6 {
                 
                 case 7:
                     System.out.println();
-                    System.out.println(queue.peek());
+                    System.out.println("First item: " + queue.peek());
                     System.out.println("\n");
                     break;
 
@@ -90,11 +93,11 @@ public class Uppgift6 {
         }
     }
     /**
-     * A class which implements a generic queue using a linked list. But for this
-     * exercise only integers values are entered because the goal is to sort
-     * the queue in ascending order. The queue can be used to insert and remove
-     * elements from the queue. The remove method can be used to remove an element
-     * from the queue using an index.
+     * The class Queue represents a modified queue of objects.
+     * The class is generic, which means that it can store objects of any type.
+     * The class is based on the GeneralizedQueue class which is a modified queue.
+     * The queue is modified to sort the elements when they are added to the queue.
+     * It also has a method which allows the user to delete elements using a index.
      * 
      * @param <Item> The type of the queue, in this case a generic type.
      */
@@ -105,7 +108,8 @@ public class Uppgift6 {
 
         /**
          * Declaration of the Node class. The Node class contains two
-         * references to the next node and the item.
+         * references to the next node and the item. The node next references
+         * to the next nodes address.
          */
         private static class Node<Item> {
             private Item item;
@@ -127,7 +131,7 @@ public class Uppgift6 {
          * is added to the first and last node. If the queue is not empty,
          * we first check if the number is equal or less than the first node,
          * otherwise we iterate through the queue until the parameter is less or if the 
-         * current node is null. We than add it to the queue at the position.
+         * current node is null. We than add it to the queue at the right position.
          * 
          * @param item The item to be added to the queue.
          */
@@ -151,6 +155,9 @@ public class Uppgift6 {
                     }
                     Node<Item> newNode = new Node<Item>();
                     newNode.item = item;
+                    if (current.next == null) {
+                        last = newNode;
+                    }
                     newNode.next = current.next;
                     current.next = newNode;
                 }
@@ -161,8 +168,9 @@ public class Uppgift6 {
         /**
          * If the index is either bigger than the size of the linked list
          * or if it is less than one we throw a exception. By using a 
-         * while loop we can navigate to the node before the one at the index.
-         * We can than set the current node to the next.next node.
+         * for loop we can navigate to the node before the one at the index.
+         * We can than set the current node to the next.next node. Because if the goal
+         * is to remove the last node we need to set the last node to the node before last.
          * 
          * @throws NoSuchElementException if the index is out of bounds.
          * @return the item that was removed from the queue
@@ -179,11 +187,11 @@ public class Uppgift6 {
             }
             else {
                 Node<Item> current = first;
-                int i = 0;
-
-                while (i < index - 1) {
+                for(int i = 0; i < index - 1; i++) {
                     current = current.next;
-                    i++;
+                }
+                if (current.next == last) {
+                    last = current;
                 }
                 item = current.next.item;
                 current.next = current.next.next;
@@ -191,13 +199,14 @@ public class Uppgift6 {
             n--;
             if (isEmpty()) {
                 last = null;
+                first = null;
             }
             return item;
         }
 
         /**
-         * If the queue is empty, return true. If the queue is not empty, return false.
-         * By comparing if the first node is null, we can determine if the queue is empty.
+         * By comparing if the first and element in the queue is null, we can
+         * determine if the queue is empty or not.
          * 
          * @return True if the queue is empty, false if the queue is not empty
          */
@@ -218,10 +227,12 @@ public class Uppgift6 {
          * The method uses bubble sort to sort the queue. By iterating 
          * through each note we can compare the item of it and sort it
          * accordingly. We typecast the node.item to convert it to
-         * a integer.
+         * a integer. O(n^2)
          * 
          * WARNING: This method is not being used but can be used to sort
-         * a queue.
+         * a queue. The author is not using this method for the assignment because
+         * the queue doesn't need to be sorted with all of the elements. Only the 
+         * element which is being added to the queue is sorted.
          */
         public void bubbleSort() {
             Node<Item> current = first;
@@ -266,10 +277,10 @@ public class Uppgift6 {
         }
         
         /**
-         * Peeks at the item at the first position in the stack.
+         * Peeks at the item at the first position in the queue.
          * 
-         * @throws NoSuchElementException if the stack is empty
-         * @return The item at the first position in the stack
+         * @throws NoSuchElementException if the queue is empty
+         * @return The item at the first position in the queue
          */
         public Item peek() {
             if (isEmpty()) throw new NoSuchElementException("The queue is empty");
@@ -277,27 +288,27 @@ public class Uppgift6 {
         }
 
         /**
-         * Returns an iterator for the stack.
+         * Returns an iterator for the queue.
          * 
-         * @return An iterator for the stack
+         * @return An iterator for the queue
          */
         public Iterator<Item> iterator() {
             return new LinkedIterator(first);
         }
 
         /**
-         * The class LinkedIterator is used to iterate through the stack. The method remove
+         * The class LinkedIterator is used to iterate through the queue. The method remove
          * is not implemented.
          * 
-         * @param <Item> The type of the stack, in this case a generalized stack
+         * @param <Item> The type of the queue, in this case a generic queue
          */
         private class LinkedIterator implements Iterator<Item> {
             private Node<Item> current;
             
             /**
-             * The current node is set to the first node in the stack.
+             * The current node is set to the first node in the queue.
              * 
-             * @param first The first node in the stack
+             * @param first The first node in the queue
              */
             public LinkedIterator(Node<Item> first) {
                 current = first;
@@ -313,10 +324,10 @@ public class Uppgift6 {
             }
 
             /**
-             * Returns the next item in the stack.
+             * Returns the next item in the queue.
              * 
-             * @throws NoSuchElementException if the stack is empty
-             * @return The next item in the stack
+             * @throws NoSuchElementException if the queue is empty
+             * @return The next item in the queue
              */
             public Item next() {
                 if (!hasNext()) throw new NoSuchElementException("The queue is empty");

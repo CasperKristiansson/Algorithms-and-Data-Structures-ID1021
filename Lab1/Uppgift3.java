@@ -1,10 +1,12 @@
-/*
-Author: Casper Kristiansson
+/**
+@author Casper Kristiansson
 Code Generated: 2021-09-07
-Code Updated: 2021-09-013
-Problem: Implement a FIFO-queue based on a double linked circular list
-Sources: https://algs4.cs.princeton.edu/10fundamentals/, Algorithms 4th Edition, Section 1.3 Queues,
-https://media.geeksforgeeks.org/wp-content/uploads/Insertion-in-a-list.png
+Code Updated: 2021-09-14
+Problem: Implement a generic FIFO-queue based on a double linked circular list. This means that
+the author implements a queue based on a that each node has the address of the next and previous
+node. It also has a reference to the current item. The author also made sure that the queue is
+circular and that the first and last node are connected.
+Sources: https://algs4.cs.princeton.edu/13stacks/, Algorithms 4th Edition, Section 1.3 Queues.
 */
 import java.util.Scanner;
 import java.util.Iterator;
@@ -15,6 +17,7 @@ public class Uppgift3 {
     /** 
      * A test for the Queue class. The test is build using 
      * cases which the user can choose which method to test and use.
+     * The test covers all of the methods in the Queue class.
      * 
      * @param args command line arguments
      */
@@ -29,7 +32,8 @@ public class Uppgift3 {
             System.out.println("4: Queue IsEmpty");
             System.out.println("5: Queue Size");
             System.out.println("6: Queue Print");
-            System.out.println("7: Exit Program");
+            System.out.println("7: Queue Peek");
+            System.out.println("8: Exit Program");
 
             int choice = input.nextInt();
             input.nextLine();
@@ -75,8 +79,14 @@ public class Uppgift3 {
                     System.out.println(queue);
                     System.out.println("\n");
                     break;
-                
+
                 case 7:
+                    System.out.println();
+                    System.out.println("First item: " + queue.peek());
+                    System.out.println("\n");
+                    break;
+                
+                case 8:
                     input.close();
                     System.exit(0);
                     break;
@@ -91,11 +101,10 @@ public class Uppgift3 {
      * which is the first element inserted into the queue. The enqueue method adds an
      * element to the end of the queue. This specific queue is a double linked circular list.
      * 
-     * @param <Item> The type of the queue, in this case a generalized type.
+     * @param <Item> The type of the queue, in this case a generic type.
      */
     public static class Queue<Item> implements Iterable<Item> {
-        private Node<Item> first;
-        private Node<Item> last;
+        private Node<Item> head;
         private int n;
 
         /**
@@ -103,13 +112,13 @@ public class Uppgift3 {
          * as null and the size as 0.
          */
         public Queue() {
-            first = null;
-            last = null;
+            head = null;
             n = 0;
         }
         /**
          * Declaration of the Node class. The Node class contains three
-         * references to the next node, the previous node and the item.
+         * references to the next node, the previous node and the item. The next
+         * and previous node contains the address of those nodes.
          */
         private static class Node<Item> {
             private Item item;
@@ -118,36 +127,38 @@ public class Uppgift3 {
         }
 
         /**
-         * Enqueue method adds an element to the end of the queue by creating a new node
-         * and setting the new node as the last node with the help of oldlast.next. If the 
-         * queue is empty, the new node is set as the first and last node to keep the queue
-         * circular.
+         * Enqueue method adds an element to the end of the queue by creating a new node. The node is that
+         * connected to the last old node as previous and the next node to the head as next to construct
+         * a double linked circular list. If the queue is empty, the new node is the head and the nodes next
+         * and previous points to itself.
          * 
          * @param item The item to be added to the queue.
          */
         void enqueue(Item item) {
-            Node<Item> oldlast = last;
-            last = new Node<Item>();
-            last.item = item;
-            last.next = first;
-            last.prev = oldlast;
+            Node<Item> newNode = new Node<Item>();
+            newNode.item = item;
+            newNode.next = head;
             
             if (isEmpty()) {
-                first = last;
-                first.next = last;
-                first.prev = last;
+                head = newNode;
+                head.next = newNode;
+                head.prev = newNode;
+                newNode.prev = head;
             }
             else {
-                first.prev = last;
-                oldlast.next = last;
+                newNode.prev = head.prev;
+                head.prev.next = newNode;
+                head.prev = newNode;
             }
             n++;
         }
 
         /**
          * Dequeue method removes the element that has been on the queue the longest,
-         * which is the first element inserted into the queue. The method returns the
-         * item of the first node, which is the element removed from the queue.
+         * which is the first element inserted into the queue. It does this by making sure that
+         * the head.next.prev points to the last item in the queue and that the head.prev.next
+         * points to the "new" head. The method returns the item of the first node, which is
+         * the element removed from the queue.
          * 
          * @return The item of the first node, which is the element removed from the queue.
          */
@@ -155,55 +166,54 @@ public class Uppgift3 {
             if (isEmpty()) 
                 throw new NoSuchElementException("The queue is empty");
 
-            Item item = first.item;
+            Item item = head.item;
 
-            if (first == last) {
-                first = null;
-                last = null;
+            if (head == head.next) {
+                head = null;
             }
             else {
-                first = first.next;
-                first.prev = last;
-                last.next = first;
+                head.next.prev = head.prev;
+                head = head.next;
+                head.prev.next = head;
             }
             n--;
             return item;
         }
         
         /**
-         * If the stack is empty, return true. If the stack is not empty, return false.
-         * By comparing the first node with null.
+         * By comparing if the first element in the queue is null, we can
+         * determine if the queue is empty or not.
          * 
-         * @return True if the stack is empty, false if the stack is not empty
+         * @return True if the queue is empty, false if the queue is not empty
          */
         boolean isEmpty() {
-            return first == null;
+            return head == null;
         }
 
         /**
-         * Returns the size of the stack.
+         * Returns the size of the queue.
          * 
-         * @return The size of the stack
+         * @return The size of the queue
          */
         int size() {
             return n;
         }
         /**
-         * Returns the string representation of the stack by using a StringBuilder.
-         * We first add a bracket to the string, and then we add the items of the stack
+         * Returns the string representation of the queue by using a StringBuilder.
+         * We first add a bracket to the string, and then we add the items of the queue
          * by using a for loop. We add a comma between the items. We add a bracket to the
          * end of the string which than is returned.
          * 
-         * @return The string representation of the stack
+         * @return The string representation of the queue
          */
         public String toString() {
             StringBuilder sb = new StringBuilder();
             sb.append("[");
-            Node<Item> current = first;
+            Node<Item> current = head;
             for(int i = 0; i < n; i++) {
                 sb.append(current.item);
                 current = current.next;
-                if (current != first) {
+                if (current != head) {
                     sb.append(", ");
                 }
             }
@@ -212,38 +222,39 @@ public class Uppgift3 {
         }
 
         /**
-         * Peeks at the item at the first position in the stack.
+         * Peeks at the item at the first position in the queue.
          * 
-         * @throws NoSuchElementException if the stack is empty
-         * @return The item at the first position in the stack
+         * @throws NoSuchElementException if the queue is empty
+         * @return The item at the first position in the queue
          */
         public Item peek() {
-            if (isEmpty()) throw new NoSuchElementException("The queue is empty");
-            return first.item;
+            if (isEmpty()) throw new NoSuchElementException("Stack is empty");
+            return head.item;
         }
 
         /**
-         * Returns an iterator for the stack.
+         * Returns an iterator for the queue by passing the head of the queue.
          * 
-         * @return An iterator for the stack
+         * @return An iterator for the queue
          */
         public Iterator<Item> iterator() {
-            return new LinkedIterator(first);
+            return new LinkedIterator(head);
         }
 
         /**
-         * The class LinkedIterator is used to iterate through the stack. The method remove
-         * is not implemented.
+         * The class ListIterator is used to iterate through the queue.
+         * Implementing a interface like this, will allows an object to be the target for 
+         * "foreach" statement.
          * 
-         * @param <Item> The type of the stack, in this case a generalized stack
+         * @param <Item> The type of the queue, in this case a generic queue
          */
         private class LinkedIterator implements Iterator<Item> {
             private Node<Item> current;
             
             /**
-             * The current node is set to the first node in the stack.
+             * The current node is set to the first node in the queue.
              * 
-             * @param first The first node in the stack
+             * @param first The first node in the queue
              */
             public LinkedIterator(Node<Item> first) {
                 current = first;
@@ -259,10 +270,10 @@ public class Uppgift3 {
             }
 
             /**
-             * Returns the next item in the stack.
+             * Returns the next item in the queue.
              * 
-             * @throws NoSuchElementException if the stack is empty
-             * @return The next item in the stack
+             * @throws NoSuchElementException if the queue is empty
+             * @return The next item in the queue
              */
             public Item next() {
                 if (!hasNext()) throw new NoSuchElementException("The queue is empty");
