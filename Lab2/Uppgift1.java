@@ -5,7 +5,7 @@
  * Problem: Implement a insertion sort which sorts an array of integers. Each time the inner
  * loop is executed the array is printed out. The number of swaps is also printed out after the
  * array is sorted.
- * Sources: None
+ * Sources: https://algs4.cs.princeton.edu/20sorting/
 */
 import java.util.Scanner;
 
@@ -37,7 +37,7 @@ public class Uppgift1 {
      * loop that iterates through the array between the index and 
      * the first element or if the other index is less than index.
      * 
-     * @param array
+     * @param array the array to be sorted
      */
     public static void insertionSort(int[] array) {
         for (int k : array) System.out.print(k + " "); System.out.println();

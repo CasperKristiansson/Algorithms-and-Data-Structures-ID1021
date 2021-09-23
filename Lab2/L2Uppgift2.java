@@ -14,7 +14,7 @@
  * Note that the modified insertion sort includes a extra nested for loop
  * which means that the time complexity is worse.
  * 
- * Sources: None
+ * Sources: https://algs4.cs.princeton.edu/20sorting/
 */
 import java.util.Scanner;
 
@@ -47,7 +47,7 @@ public class L2Uppgift2 {
      * loop that iterates through the array between the index and 
      * the first element or if the other index is less than index.
      * 
-     * @param array
+     * @param array the array to be sorted
      */
     public static void insertionSort(int[] array) {
         for (int k : array) System.out.print(k + " "); System.out.println();
