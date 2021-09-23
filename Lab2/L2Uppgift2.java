@@ -2,9 +2,18 @@
  * @author Casper Kristiansson
  * Code Generated: 2021-09-23
  * Code Updated: 2021-09-23
- * Problem: Implement a insertion sort which sorts an array of integers. Each time the inner
- * loop is executed the array is printed out. The number of swaps is also printed out after the
- * array is sorted.
+ * Problem: Implement a insertion sort which sorts an array of integers. This
+ * exercise the goal is also to implement a function which prints the 
+ * insertions and the amount of insertions.
+ * 
+ * The time complexity of insertion sort is:
+ * Best case: O(n)
+ * Average case: O(n^2)
+ * Worst case: O(n^2)
+ * 
+ * Note that the modified insertion sort includes a extra nested for loop
+ * which means that the time complexity is worse.
+ * 
  * Sources: None
 */
 import java.util.Scanner;
