@@ -26,18 +26,18 @@ public class L2Uppgift5 {
             array[i] = (int)(Math.random() * 100);
         }
 
-        for (int i = 0; i < 31; i++) {
-            long startTime = System.nanoTime();
-            for (int j = 0; j < numberOfTests; j++) {
-                mergeSortCutoff(array, i);
-            }
-            long endTime = System.nanoTime();
-            long duration = (endTime - startTime);
-            System.out.println("Merge sort cutoff: " + duration / numberOfTests + " nanoseconds\t" + "Cutoff: " + i);
-        }
+        // for (int i = 0; i < 31; i++) {
+        //     long startTime = System.nanoTime();
+        //     for (int j = 0; j < numberOfTests; j++) {
+        //         mergeSortCutoff(array, i);
+        //     }
+        //     long endTime = System.nanoTime();
+        //     long duration = (endTime - startTime);
+        //     System.out.println("Merge sort cutoff: " + duration / numberOfTests + " nanoseconds\t" + "Cutoff: " + i);
+        // }
 
-        // mergeSortCutoff(array, 1);
-        // for (int i : array) System.out.print(i + " ");
+        mergeSortCutoff(array, 1);
+        for (int i : array) System.out.print(i + " ");
         
     }
 
