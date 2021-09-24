@@ -4,18 +4,54 @@
  * Code Updated: 2021-09-23
  * Problem: Implement Insertion sort, merge sort and quick sort. The goal
  * is also to time the sorting algorithms.
+ * Time complexity:
+ * Insertion sort: O(n^2), O(n^2), O(n)
+ * Merge sort: O(n*log n), O(n*log n), O(n*log n)
+ * Quick sort: O(n^2), O(n*log n), O(n*log n)
  * Sources: https://algs4.cs.princeton.edu/20sorting/
 */
-import java.util.Scanner;
-
 public class L2Uppgift4 {
+    /**
+     * The test for the different sorting algorithms. In this test
+     * we fill an array with random numbers and then sort it. We run
+     * each sorting algorithm 5 times to get an average time. We then
+     * print the average time for each sorting algorithm.
+     * 
+     * @param args the command line arguments
+     */
     public static void main(String[] args) {
-        Scanner input = new Scanner(System.in);
-        int[] array = {1,3,1,4,7,1,8,3,1,9,2,3,1};
-        quickSort(array);
-        for (int i : array) System.out.print(i + " ");
+        int numberOfTests = 10000000;
+        int arraySizePotence = 1;
+        int arrayOffset = 1;
 
-        input.close();
+        int[] array = new int[(int)Math.pow(10, arraySizePotence) * arrayOffset];
+        for (int i = 0; i < array.length; i++) {
+            array[i] = (int)(Math.random() * 100);
+        }
+
+        long startTime = System.nanoTime();
+        for (int i = 0; i < numberOfTests; i++) {
+            quickSort(array.clone());
+        }
+        long endTime = System.nanoTime();
+        long duration = (endTime - startTime);
+        System.out.println("Quick sort: " + duration / numberOfTests + " nanoseconds");
+
+        startTime = System.nanoTime();
+        for (int i = 0; i < numberOfTests; i++) {
+            mergeSort(array.clone());
+        }
+        endTime = System.nanoTime();
+        duration = (endTime - startTime);
+        System.out.println("Merge sort: " + duration / numberOfTests + " nanoseconds");
+
+        startTime = System.nanoTime();
+        for (int i = 0; i < numberOfTests; i++) {
+            insertionSort(array.clone());
+        }
+        endTime = System.nanoTime();
+        duration = (endTime - startTime);
+        System.out.println("Insertion sort: " + duration / numberOfTests + " nanoseconds");
     }
 
     /**
