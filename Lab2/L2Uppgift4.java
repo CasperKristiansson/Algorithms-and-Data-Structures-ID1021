@@ -8,7 +8,8 @@
  * Insertion sort: O(n^2), O(n^2), O(n)
  * Merge sort: O(n*log n), O(n*log n), O(n*log n)
  * Quick sort: O(n^2), O(n*log n), O(n*log n)
- * Sources: https://algs4.cs.princeton.edu/20sorting/
+ * Sources: https://algs4.cs.princeton.edu/20sorting/, Algorithms 4th Edition, Section 2.3 Mergesort,
+ * Section 2.3 Quicksort
 */
 public class L2Uppgift4 {
     /**
@@ -20,7 +21,7 @@ public class L2Uppgift4 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int numberOfTests = 10000000;
+        int numberOfTests = 1;
         int arraySizePotence = 1;
         int arrayOffset = 1;
 
@@ -52,6 +53,9 @@ public class L2Uppgift4 {
         endTime = System.nanoTime();
         duration = (endTime - startTime);
         System.out.println("Insertion sort: " + duration / numberOfTests + " nanoseconds");
+
+        insertionSort(array);
+        for (int i : array) System.out.print(i + " ");
     }
 
     /**
@@ -67,8 +71,7 @@ public class L2Uppgift4 {
             int temp = array[i];
             int j = i - 1;
             while (j >= 0 && array[j] > temp) {
-                array[j + 1] = array[j];
-                j--;
+                array[j + 1] = array[j--];
             }
             array[j + 1] = temp;
         }
@@ -126,9 +129,8 @@ public class L2Uppgift4 {
         for (int j = 0; j < upper; j++) array2[j] = array[middle + 1 + j];
     
         while (array1Index < lower && array2Index < upper) {
-            if (array1[array1Index] < array2[array2Index]) array[left] = array1[array1Index++];
-            else array[left] = array2[array2Index++];
-            left++;
+            if (array1[array1Index] < array2[array2Index]) array[left++] = array1[array1Index++];
+            else array[left++] = array2[array2Index++];
         }
     
         while (array1Index < lower) array[left++] = array1[array1Index++];
