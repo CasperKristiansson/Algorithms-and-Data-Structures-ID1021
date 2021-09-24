@@ -17,8 +17,8 @@ public class L2Uppgift5 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int numberOfTests = 1000;
-        int arraySizePotence = 4;
+        int numberOfTests = 1;
+        int arraySizePotence = 2;
         int arrayOffset = 1;
 
         int[] array = new int[(int)Math.pow(10, arraySizePotence) * arrayOffset];
@@ -36,7 +36,7 @@ public class L2Uppgift5 {
             System.out.println("Merge sort cutoff: " + duration / numberOfTests + " nanoseconds\t" + "Cutoff: " + i);
         }
 
-        // mergeSortCutoff(array, cutoff);
+        // mergeSortCutoff(array, 1);
         // for (int i : array) System.out.print(i + " ");
         
     }
@@ -76,13 +76,15 @@ public class L2Uppgift5 {
      * the insertion sort method. Otherwise we split the array using a middle
      * index and call the mergeSortInner again.
      * 
-     * @param array
-     * @param left
-     * @param right
-     * @param cutoff
+     * @param array The array to be sorted
+     * @param left  The left index of the array
+     * @param right The right index of the array
+     * @param cutoff The cutoff to determine when to switch to insertion sort.
      */
     public static void mergeSortInner(int[] array, int left, int right, int cutoff) {
-        if (right - left < cutoff) insertionSort(array, left, right);
+        if (right - left < cutoff) {
+            insertionSort(array, left, right);
+        }
 
         else if (left < right) {
             int middle = (left + right) / 2; 

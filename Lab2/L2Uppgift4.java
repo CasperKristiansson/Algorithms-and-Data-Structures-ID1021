@@ -21,9 +21,11 @@ public class L2Uppgift4 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int numberOfTests = 1000000;
-        int arraySizePotence = 1;
-        int arrayOffset = 1;
+        int numberOfTests = 1;
+        int arraySizePotence = 5;
+        int arrayOffset = 5;
+
+        System.out.println("Number of tests: " + numberOfTests + " ArraySizePotence: " + arraySizePotence + " ArrayOffset: " + arrayOffset);
 
         int[] array = new int[(int)Math.pow(10, arraySizePotence) * arrayOffset];
         for (int i = 0; i < array.length; i++) {
