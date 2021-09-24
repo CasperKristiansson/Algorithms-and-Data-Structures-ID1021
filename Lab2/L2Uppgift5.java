@@ -82,9 +82,7 @@ public class L2Uppgift5 {
      * @param cutoff The cutoff to determine when to switch to insertion sort.
      */
     public static void mergeSortInner(int[] array, int left, int right, int cutoff) {
-        if (right - left < cutoff) {
-            insertionSort(array, left, right);
-        }
+        if (right - left < cutoff) insertionSort(array, left, right);
 
         else if (left < right) {
             int middle = (left + right) / 2; 
