@@ -21,13 +21,13 @@ public class L2Uppgift4 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int numberOfTests = 1;
+        int numberOfTests = 1000000;
         int arraySizePotence = 1;
         int arrayOffset = 1;
 
         int[] array = new int[(int)Math.pow(10, arraySizePotence) * arrayOffset];
         for (int i = 0; i < array.length; i++) {
-            array[i] = (int)(Math.random() * 100);
+            array[i] = (int)(Math.random() * 100000);
         }
 
         long startTime = System.nanoTime();
@@ -54,8 +54,8 @@ public class L2Uppgift4 {
         duration = (endTime - startTime);
         System.out.println("Insertion sort: " + duration / numberOfTests + " nanoseconds");
 
-        insertionSort(array);
-        for (int i : array) System.out.print(i + " ");
+        // insertionSort(array);
+        // for (int i : array) System.out.print(i + " ");
     }
 
     /**
