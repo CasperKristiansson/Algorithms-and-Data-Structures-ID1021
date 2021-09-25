@@ -179,8 +179,8 @@ public class L2Uppgift6 {
      */
     public static int partitionMedianOfThree(int[] array, int left, int right) {
         int pivot = medianOfThree(array, left, right);
-        int i = left;
-        for (int j = left; j < right - 1; j++) {
+        int i = left + 1;
+        for (int j = left + 1; j < right - 1; j++) {
             if (array[j] <= pivot) {
                 swap(array, i, j);
                 i++;
