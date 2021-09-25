@@ -1,7 +1,7 @@
 /**
  * @author Casper Kristiansson
- * Code Generated: 2021-09-24
- * Code Updated: 2021-09-24
+ * Code Generated: 2021-09-25
+ * Code Updated: 2021-09-25
  * Problem: Implement two modified functions for quick sort, one which
  * chooses the pivot element as the first in the sub array and one
  * which uses median of three to determine the pivot element.
@@ -21,29 +21,36 @@ public class L2Uppgift6 {
         int arraySizePotence = 2;
         int arrayOffset = 1;
 
-        int[] array = new int[(int)Math.pow(10, arraySizePotence) * arrayOffset];
-        for (int i = 0; i < array.length; i++) {
-            array[i] = (int)(Math.random() * 100);
+        int[] array2 = new int[(int)Math.pow(10, arraySizePotence) * arrayOffset];
+        for (int i = 0; i < array2.length; i++) {
+            array2[i] = (int)(Math.random() * 100);
         }
-
-        long startTime = System.nanoTime();
+        
+        long duration = 0;
+        long duration2 = 0;
+        
         for (int i = 0; i < numberOfTests; i++) {
+            int[] array = new int[(int)Math.pow(10, arraySizePotence) * arrayOffset];
+            for (int j = 0; j < array.length; j++) array[j] = (int)(Math.random() * 100000);
+
+            long startTime = System.nanoTime();
             quickSortLeftPartitioning(array.clone());
-        }
-        long endTime = System.nanoTime();
-        long duration = (endTime - startTime);
-        System.out.println("Quick sort left partitioning: " + duration / numberOfTests + " nanoseconds");
+            long endTime = System.nanoTime();
+            duration += (endTime - startTime);
 
-        startTime = System.nanoTime();
-        for (int i = 0; i < numberOfTests; i++) {
+            startTime = System.nanoTime();
             quickSortMedianOfThree(array.clone());
+            endTime = System.nanoTime();
+            duration2 += (endTime - startTime);
         }
-        endTime = System.nanoTime();
-        duration = (endTime - startTime);
-        System.out.println("Quick sort median of three: " + duration / numberOfTests + " nanoseconds");
 
-        // quickSortMedianOfThree(array);
-        // for (int i : array) System.out.print(i + " ");
+        
+        System.out.println("Quick sort left partitioning:\t" + duration / numberOfTests + " nanoseconds");
+        System.out.println("Quick sort median of three:\t" + duration2 / numberOfTests + " nanoseconds");
+
+        for (int i : array2) System.out.print(i + " "); System.out.println("\n");
+        quickSortMedianOfThree(array2);
+        for (int i : array2) System.out.print(i + " ");
     }
     /**
      * The caller for the modified quick sort algorithm.
@@ -89,16 +96,11 @@ public class L2Uppgift6 {
         int i = left + 1; 
         for (int j = left + 1; j <= right; j++) {
             if (array[j] <= pivot) {
-                int temp = array[i];
-                array[i] = array[j];
-                array[j] = temp;
+                swap(array, i, j);
                 i++;
             }
         }
-        int temp = array[i-1];
-        array[i-1] = array[left];
-        array[left] = temp;
-
+        swap(array, i-1, left);
         return i-1;
     }
 
@@ -108,7 +110,7 @@ public class L2Uppgift6 {
      * @param array The array to be sorted.
      */
     public static void quickSortMedianOfThree(int[] array) {
-        quickSortInner(array, 0, array.length - 1);
+        quickSortInnerMedianOfThree(array, 0, array.length - 1);
     }
 
     /**
@@ -123,9 +125,9 @@ public class L2Uppgift6 {
      */
     public static void quickSortInnerMedianOfThree(int[] array, int left, int right) {
         if (left < right) {
-            int pivot = partition(array, left, right);
-            quickSortInner(array, left, pivot - 1);
-            quickSortInner(array, pivot + 1, right);
+            int pivot = partitionMedianOfThree(array, left, right);
+            quickSortInnerMedianOfThree(array, left, pivot - 1);
+            quickSortInnerMedianOfThree(array, pivot + 1, right);
         }
     }
     

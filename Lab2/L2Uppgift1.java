@@ -9,7 +9,7 @@
 */
 import java.util.Scanner;
 
-public class Uppgift1 {
+public class L2Uppgift1 {
     /** 
      * A test for for the insertion sort algorithm. The user
      * is asked to input the size of the array and the elements
