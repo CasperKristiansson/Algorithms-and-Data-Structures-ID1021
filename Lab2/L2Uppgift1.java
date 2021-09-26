@@ -1,7 +1,7 @@
 /**
  * @author Casper Kristiansson
  * Code Generated: 2021-09-23
- * Code Updated: 2021-09-23
+ * Code Updated: 2021-09-26
  * Problem: Implement a insertion sort which sorts an array of integers. Each time the inner
  * loop is executed the array is printed out. The number of swaps is also printed out after the
  * array is sorted.
@@ -40,7 +40,7 @@ public class L2Uppgift1 {
      * @param array the array to be sorted
      */
     public static void insertionSort(int[] array) {
-        for (int k : array) System.out.print(k + " "); System.out.println();
+        for (int i : array) System.out.print(i + " "); System.out.println();
         int swaps = 0;
 
         for (int i = 1; i < array.length; i++) {

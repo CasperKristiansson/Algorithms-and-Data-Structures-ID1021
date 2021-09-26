@@ -1,7 +1,7 @@
 /**
  * @author Casper Kristiansson
  * Code Generated: 2021-09-23
- * Code Updated: 2021-09-23
+ * Code Updated: 2021-09-26
  * Problem: Implement a function which sorts an array of integers by either
  * negative, positive. Which means that all negative numbers should be
  * stored in the beginning of the array and all positive numbers in the end. But the order
@@ -37,17 +37,15 @@ int main() {
  * @param size The size of the array. 
  */
 void sortNegativePositive(int array[], int size) {
-    int temp, j;
     for (int i = 1; i < size; i++) {
         if (array[i] >= 0) continue;
 
-        temp = array[i];
-        j = i - 1;
+        int temp = array[i];
+        int j = i - 1;
         while (j >= 0 && array[j] >= 0) {
             array[j + 1] = array[j];
             j--;
         }
         array[j + 1] = temp;
-        for (int k = 0; k < size; k++) printf("%d ", array[k]); printf("\n");
     }
 }

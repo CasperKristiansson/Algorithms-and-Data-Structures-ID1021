@@ -22,7 +22,7 @@ public class L2Uppgift2 {
     /** 
      * A test for for the insertion sort algorithm. The user
      * is asked to input the size of the array and the elements
-     * of the array. The array is then sorted and printed out.
+     * of the array.
      * 
      * @param args command line arguments
      */

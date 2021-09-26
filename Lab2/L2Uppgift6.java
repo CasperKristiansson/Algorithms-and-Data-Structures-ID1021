@@ -17,13 +17,13 @@ public class L2Uppgift6 {
      * @param args the command line arguments
      */
     public static void main(String[] args) {
-        int numberOfTests = 1;
-        int arraySizePotence = 2;
-        int arrayOffset = 1;
+        int numberOfTests = 10;
+        int arraySizePotence = 5;
+        int arrayOffset = 5;
 
         int[] array2 = new int[(int)Math.pow(10, arraySizePotence) * arrayOffset];
         for (int i = 0; i < array2.length; i++) {
-            array2[i] = (int)(Math.random() * 100);
+            array2[i] = (int)(Math.random() * 100000);
         }
         
         long duration = 0;
@@ -44,14 +44,27 @@ public class L2Uppgift6 {
             duration2 += (endTime - startTime);
         }
 
-        
         System.out.println("Quick sort left partitioning:\t" + duration / numberOfTests + " nanoseconds");
         System.out.println("Quick sort median of three:\t" + duration2 / numberOfTests + " nanoseconds");
 
-        for (int i : array2) System.out.print(i + " "); System.out.println("\n");
-        quickSortMedianOfThree(array2);
-        for (int i : array2) System.out.print(i + " ");
+        // for (int i : array2) System.out.print(i + " "); System.out.println("\n");
+        // quickSortLeftPartitioning(array2);
+        // for (int i : array2) System.out.print(i + " ");
+        // System.out.println("\n" + isSorted(array2));
     }
+
+    /**
+     * Helper function to check whenever a array is sorted
+     * or not.
+     * 
+     * @param array the array to check
+     * @return true if the array is sorted, otherwise false
+     */
+    public static boolean isSorted(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) if (array[i] > array[i + 1]) return false;
+        return true;
+    }
+
     /**
      * The caller for the modified quick sort algorithm.
      * 
@@ -100,8 +113,8 @@ public class L2Uppgift6 {
                 i++;
             }
         }
-        swap(array, i-1, left);
-        return i-1;
+        swap(array, i - 1, left);
+        return i - 1;
     }
 
     /**
@@ -114,17 +127,19 @@ public class L2Uppgift6 {
     }
 
     /**
-     * Recursive method for the algorithm. Starts with comparing if left 
-     * is less than right. If it is we start by sorting the array. After it
-     * has been sorted we get the pivot position. We than call the function 
-     * again with the left and right indexes and the offset for the pivot.
+     * Recursive method for the algorithm. We first check if the
+     * array / sub array size is less than 3. If it is we call the
+     * medianOfThree function. We also check if the left index is less
+     * than the right index. If it is we start by sorting the array using
+     * partition modified with median of three.
      * 
      * @param array The array to be sorted.
      * @param left The left index of the array.
      * @param right The right index of the array.
      */
     public static void quickSortInnerMedianOfThree(int[] array, int left, int right) {
-        if (left < right) {
+        if (right - left < 3) medianOfThree(array, left, right);
+        else if (left < right) {
             int pivot = partitionMedianOfThree(array, left, right);
             quickSortInnerMedianOfThree(array, left, pivot - 1);
             quickSortInnerMedianOfThree(array, pivot + 1, right);
@@ -134,23 +149,20 @@ public class L2Uppgift6 {
     /**
      * A function which calculates the median of three by first calculating the
      * middle index of the array. We than compare and sort those three elements
-     * (left, middle, right). We than swap the median element with right - 1 and 
-     * return that value.
+     * (left, middle, right). We than return the middle value position.
      * 
      * @param array The array to be sorted.
      * @param left The left index of the array.
      * @param right The right index of the array.
-     * @return The new pivot element
+     * @return The new pivot index.
      */
     public static int medianOfThree(int[] array, int left, int right) {
         int middle = (left + right) / 2;
-    
         if (array[left] > array[middle]) swap(array, left, middle);
         if (array[left] > array[right]) swap(array, left, right);
         if (array[middle] > array[right]) swap(array, middle, right);
-    
-        swap(array, middle, right - 1);
-        return array[right - 1];
+
+        return middle;
     }
 
     /**
@@ -178,9 +190,12 @@ public class L2Uppgift6 {
      * @return The pivot position.
      */
     public static int partitionMedianOfThree(int[] array, int left, int right) {
-        int pivot = medianOfThree(array, left, right);
+        int middle = medianOfThree(array, left, right);
+        swap(array, middle, right - 1);
+        int pivot = array[right - 1];
         int i = left + 1;
-        for (int j = left + 1; j < right - 1; j++) {
+
+        for (int j = i; j < right - 1; j++) {
             if (array[j] <= pivot) {
                 swap(array, i, j);
                 i++;

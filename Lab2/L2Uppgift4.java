@@ -1,31 +1,24 @@
 /**
  * @author Casper Kristiansson
  * Code Generated: 2021-09-23
- * Code Updated: 2021-09-23
+ * Code Updated: 2021-09-26
  * Problem: Implement Insertion sort, merge sort and quick sort. The goal
  * is also to time the sorting algorithms.
- * Time complexity:
- * Insertion sort: O(n^2), O(n^2), O(n)
- * Merge sort: O(n*log n), O(n*log n), O(n*log n)
- * Quick sort: O(n^2), O(n*log n), O(n*log n)
  * Sources: https://algs4.cs.princeton.edu/20sorting/, Algorithms 4th Edition, Section 2.3 Mergesort,
  * Section 2.3 Quicksort
 */
 public class L2Uppgift4 {
     /**
      * The test for the different sorting algorithms. In this test
-     * we fill an array with random numbers and then sort it. We run
-     * each sorting algorithm 5 times to get an average time. We then
-     * print the average time for each sorting algorithm.
+     * we fill an array with random numbers and then sort it. We also run
+     * these tests multiple times to get a average time.
      * 
      * @param args the command line arguments
      */
     public static void main(String[] args) {
         int numberOfTests = 1;
-        int arraySizePotence = 5;
+        int arraySizePotence = 4;
         int arrayOffset = 5;
-
-        System.out.println("Number of tests: " + numberOfTests + " ArraySizePotence: " + arraySizePotence + " ArrayOffset: " + arrayOffset);
 
         int[] array = new int[(int)Math.pow(10, arraySizePotence) * arrayOffset];
         for (int i = 0; i < array.length; i++) {
@@ -56,8 +49,21 @@ public class L2Uppgift4 {
         duration = (endTime - startTime);
         System.out.println("Insertion sort: " + duration / numberOfTests + " nanoseconds");
 
-        // insertionSort(array);
+        // quickSort(array);
+        // System.out.println(isSorted(array));
         // for (int i : array) System.out.print(i + " ");
+    }
+
+    /**
+     * Helper function to check whenever a array is sorted
+     * or not.
+     * 
+     * @param array the array to check
+     * @return true if the array is sorted, otherwise false
+     */
+    public static boolean isSorted(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) if (array[i] > array[i + 1]) return false;
+        return true;
     }
 
     /**
@@ -74,7 +80,7 @@ public class L2Uppgift4 {
             int j = i - 1;
             while (j >= 0 && array[j] > temp) {
                 array[j + 1] = array[j];
-                j++;
+                j--;
             }
             array[j + 1] = temp;
         }

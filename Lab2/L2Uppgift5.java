@@ -1,7 +1,7 @@
 /**
  * @author Casper Kristiansson
  * Code Generated: 2021-09-24
- * Code Updated: 2021-09-24
+ * Code Updated: 2021-09-26
  * Problem: Implement a cutoff in the merge sort algorithm. The cutoff is used to determine when to switch to insertion sort.
  * if the array is smaller than the cutoff.
  * Sources: https://algs4.cs.princeton.edu/20sorting/, Algorithms 4th Edition, Section 2.3 Mergesort,
@@ -18,7 +18,7 @@ public class L2Uppgift5 {
      */
     public static void main(String[] args) {
         int numberOfTests = 1;
-        int arraySizePotence = 2;
+        int arraySizePotence = 5;
         int arrayOffset = 1;
 
         int[] array = new int[(int)Math.pow(10, arraySizePotence) * arrayOffset];
@@ -26,19 +26,31 @@ public class L2Uppgift5 {
             array[i] = (int)(Math.random() * 100);
         }
 
-        // for (int i = 0; i < 31; i++) {
-        //     long startTime = System.nanoTime();
-        //     for (int j = 0; j < numberOfTests; j++) {
-        //         mergeSortCutoff(array, i);
-        //     }
-        //     long endTime = System.nanoTime();
-        //     long duration = (endTime - startTime);
-        //     System.out.println("Merge sort cutoff: " + duration / numberOfTests + " nanoseconds\t" + "Cutoff: " + i);
-        // }
+        for (int i = 0; i < 31; i++) {
+            long startTime = System.nanoTime();
+            for (int j = 0; j < numberOfTests; j++) {
+                mergeSortCutoff(array, i);
+            }
+            long endTime = System.nanoTime();
+            long duration = (endTime - startTime);
+            System.out.println("Merge sort cutoff: " + duration / numberOfTests + " nanoseconds\t" + "Cutoff: " + i);
+        }
 
-        mergeSortCutoff(array, 1);
-        for (int i : array) System.out.print(i + " ");
-        
+        // mergeSortCutoff(array, 7);
+        // System.out.println(isSorted(array));
+        // for (int i : array) System.out.print(i + " ");
+    }
+
+    /**
+     * Helper function to check whenever a array is sorted
+     * or not.
+     * 
+     * @param array the array to check
+     * @return true if the array is sorted, otherwise false
+     */
+    public static boolean isSorted(int[] array) {
+        for (int i = 0; i < array.length - 1; i++) if (array[i] > array[i + 1]) return false;
+        return true;
     }
 
     /**
@@ -50,7 +62,7 @@ public class L2Uppgift5 {
      * @param right the right index of the array
      */
     public static void insertionSort(int[] array, int left, int right) {
-        for (int i = left; i <= right; i++) {
+        for (int i = left; i < right; i++) {
             int temp = array[i];
             int j = i - 1;
             while (j >= left && array[j] > temp) {
