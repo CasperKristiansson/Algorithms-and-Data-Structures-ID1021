@@ -6,6 +6,7 @@
  * negative, positive. Which means that all negative numbers should be
  * stored in the beginning of the array and all positive numbers in the end. But the order
  * of either the positive or negative numbers should be the same as in the original array.
+ * Time complexity is: best case O(n), worst case O(n^2)
  * Sources: https://algs4.cs.princeton.edu/20sorting/
 */
 

@@ -17,12 +17,12 @@ public class L2Uppgift4 {
      */
     public static void main(String[] args) {
         int numberOfTests = 1;
-        int arraySizePotence = 4;
-        int arrayOffset = 5;
+        int arraySizePotence = 2;
+        int arrayOffset = 1;
 
         int[] array = new int[(int)Math.pow(10, arraySizePotence) * arrayOffset];
         for (int i = 0; i < array.length; i++) {
-            array[i] = (int)(Math.random() * 100000);
+            array[i] = (int)(Math.random() * 100);
         }
 
         long startTime = System.nanoTime();
@@ -48,10 +48,10 @@ public class L2Uppgift4 {
         endTime = System.nanoTime();
         duration = (endTime - startTime);
         System.out.println("Insertion sort: " + duration / numberOfTests + " nanoseconds");
-
-        // quickSort(array);
-        // System.out.println(isSorted(array));
-        // for (int i : array) System.out.print(i + " ");
+        
+        for (int i : array) System.out.print(i + " "); System.out.println();
+        mergeSort(array);
+        for (int i : array) System.out.print(i + " ");
     }
 
     /**
