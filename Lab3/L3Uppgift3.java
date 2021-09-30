@@ -1,3 +1,11 @@
+/**
+ * @author Casper Kristiansson
+ * Code Generated: 2021-09-30
+ * Code Updated: 2021-09-30
+ * Problem: 
+ * Sources:
+*/
+
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -180,92 +188,6 @@ public class L3Uppgift3 {
         }
 
         /**
-         * Sends in the root of the tree to deleteMin
-         * 
-         * @throws NoSuchElementException if the tree is empty
-         */
-        public void deleteMin() {
-            if (isEmpty()) throw new NoSuchElementException("BST is underflow");
-            root = deleteMin(root);
-        }
-
-        /**
-         * Deletes the minimum key-value pair in the subtree by navigating
-         * to the left most node using recursion and deleting that node.
-         * 
-         * @param x The current node
-         * @return The next node
-         */
-        private Node deleteMin(Node x) {
-            if (x.left == null) return x.right;
-            x.left = deleteMin(x.left);
-            x.N = size(x.left) + size(x.right) + 1;
-            return x;
-        }
-
-        /**
-         * Sends the root node to deleteMax
-         * 
-         * @throws NoSuchElementException if the tree is empty
-         */
-        public void deleteMax() {
-            if (isEmpty()) throw new NoSuchElementException("BST underflow");
-            root = deleteMax(root);
-        }
-
-        /**
-         * Deletes the maximum key-value pair in the subtree by navigating
-         * to the right most node using recursion and deleting that node.
-         * 
-         * @param x The current node
-         * @return The next node
-         */
-        private Node deleteMax(Node x) {
-            if (x.right == null) return x.left;
-            x.right = deleteMax(x.right);
-            x.N = size(x.left) + size(x.right) + 1;
-            return x;
-        }
-
-        /**
-         * Deletes a node by sending in the root and key to delete
-         * 
-         * @throws IllegalArgumentException if the key is null
-         * @param key The key to delete
-         */
-        public void delete(Key key) {
-            if (key == null) throw new IllegalArgumentException("Null Key");
-            root = delete(root, key);
-        }
-
-        /**
-         * Deletes a key by recursively navigating to the right position
-         * and deleting the node. We also need to reconfigure which nodes
-         * are connected to each other by changing the left and right pointers.
-         * 
-         * @param x The current node
-         * @param key The key to delete
-         * @return The next node
-         */
-        private Node delete(Node x, Key key) {
-            if (x == null) return null;
-
-            int cmp = key.compareTo(x.key);
-            if      (cmp < 0) x.left  = delete(x.left,  key);
-            else if (cmp > 0) x.right = delete(x.right, key);
-            else { 
-                if (x.right == null) return x.left;
-                if (x.left  == null) return x.right;
-                Node t = x;
-                x = min(t.right);
-                x.right = deleteMin(t.right);
-                x.left = t.left;
-            } 
-            x.N = size(x.left) + size(x.right) + 1;
-            return x;
-        } 
-
-        /**
          * Returns the minimum key in the tree
          * 
          * @throws NoSuchElementException if the tree is empty
@@ -306,75 +228,7 @@ public class L3Uppgift3 {
         private Node max(Node x) {
             if (x.right == null) return x; 
             else return max(x.right); 
-        } 
-
-        /**
-         * Returns a key under a specified key or the same key
-         * 
-         * @throws NoSuchElementException if the tree is empty
-         * @throws IllegalArgumentException if the key is null
-         * @param key The key to search for
-         * @return the key under a specified key or the same key
-         */
-        public Key floor(Key key) {
-            if (key == null) throw new IllegalArgumentException("Null Key");
-            if (isEmpty()) throw new NoSuchElementException("BST is empty");
-            Node x = floor(root, key);
-            return x.key;
-        } 
-
-        /**
-         * Navigates to a key under a specific key or the same key
-         * 
-         * @throws NoSuchElementException If the doesn't exist any floor values
-         * @param x The current node
-         * @param key The key to search for
-         * @return the key under a specified key
-         */ 
-        private Node floor(Node x, Key key) {
-            if (x == null) throw new NoSuchElementException("There doesn't exist any lower floor values");
-            int cmp = key.compareTo(x.key);
-            if (cmp == 0) return x;
-            if (cmp <  0) return floor(x.left, key);
-            Node t = floor(x.right, key); 
-            if (t != null) return t;
-            else return x; 
         }
-
-        /**
-         * Returns a key over a specified key or the same key
-         * 
-         * @throws NoSuchElementException if the tree is empty
-         * @throws IllegalArgumentException if the key is null
-         * @param key The key to search for
-         * @return the key over a specified key or the same key
-         */
-        public Key ceiling(Key key) {
-            if (key == null) throw new IllegalArgumentException("Null Key");
-            if (isEmpty()) throw new NoSuchElementException("BST is empty");
-            Node x = ceiling(root, key);
-            return x.key;
-        }
-
-        /**
-         * Navigates to a node that is over a specific key or the same key
-         * 
-         * @throws NoSuchElementException If the doesn't exist any ceiling values
-         * @param x The current node
-         * @param key The key to search for
-         * @return the key over a specified key or the same
-         */
-        private Node ceiling(Node x, Key key) {
-            if (x == null) throw new NoSuchElementException("There doesn't exist any bigger ceiling values");
-            int cmp = key.compareTo(x.key);
-            if (cmp == 0) return x;
-            if (cmp < 0) { 
-                Node t = ceiling(x.left, key); 
-                if (t != null) return t;
-                else return x; 
-            } 
-            return ceiling(x.right, key); 
-        } 
 
         /**
          * Selects a specific key in the tree using a index
