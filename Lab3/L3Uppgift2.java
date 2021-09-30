@@ -37,7 +37,7 @@ public class L3Uppgift2 {
         while (scanner.hasNextLine()) {
             Scanner line = new Scanner(scanner.nextLine());
             while (line.hasNext()) {
-                String s = line.next();
+                String s = line.next().toLowerCase();
 
                 for(int i = 0; i < s.length(); i++) {
                     char c = s.charAt(i);
@@ -46,10 +46,11 @@ public class L3Uppgift2 {
                     }
                 }
                 s = s.trim();
-
-                if (!st.contains(s)) st.put(s, 1);
-                else st.put(s, st.get(s) + 1);
                 
+                if(s.length() > 0) {
+                    if (!st.contains(s)) st.put(s, 1);
+                    else st.put(s, st.get(s) + 1);
+                }
                 if (wordCounter >= maxWords) break outerLoop;
                 wordCounter++;
             }
@@ -59,7 +60,6 @@ public class L3Uppgift2 {
 
         String max = "";
         st.put(max, 0);
-        
         for(String s: st.keys()) if (st.get(s) > st.get(max)) max = s;
         System.out.println("Max value: " + max + " " + st.get(max));
     }

@@ -5,7 +5,6 @@
  * Problem: 
  * Sources:
 */
-
 import java.util.Scanner;
 import java.util.NoSuchElementException;
 import java.io.File;
@@ -29,7 +28,7 @@ public class L3Uppgift5 {
         while (scanner.hasNextLine()) {
             Scanner line = new Scanner(scanner.nextLine());
             while (line.hasNext()) {
-                String s = line.next();
+                String s = line.next().toLowerCase();
 
                 for(int i = 0; i < s.length(); i++) {
                     char c = s.charAt(i);
@@ -39,8 +38,10 @@ public class L3Uppgift5 {
                 }
                 s = s.trim();
 
-                if (!st.contains(s)) st.put(s, 1);
-                else st.put(s, st.get(s) + 1);
+                if(s.length() > 0) {
+                    if (!st.contains(s)) st.put(s, 1);
+                    else st.put(s, st.get(s) + 1);
+                }
                 
                 if (wordCounter >= maxWords) break outerLoop;
                 wordCounter++;

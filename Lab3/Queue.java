@@ -3,7 +3,6 @@ import java.util.NoSuchElementException;
 /**
  * The class Queue represents a modified queue of objects.
  * The class is generic, which means that it can store objects of any type.
- * The queue has a modified remove which allows the user to remove an element using an index.
  * 
  * @param <Item> The type of the queue, in this case a generic type.
  */

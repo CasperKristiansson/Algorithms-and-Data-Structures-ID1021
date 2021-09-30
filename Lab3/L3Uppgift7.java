@@ -2,8 +2,10 @@
  * @author Casper Kristiansson
  * Code Generated: 2021-09-30
  * Code Updated: 2021-09-30
- * Problem: 
- * Sources:
+ * Problem: Develop a BST which stores the first 200 words from a text file. It
+ * should be able to print the words in alphabetical order and in reverse
+ * alphabetical order.
+ * Sources: https://algs4.cs.princeton.edu/30searching/, Algorithms 4th Edition (3.2 Binary Search Trees)
 */
 
 import java.io.File;
@@ -11,18 +13,17 @@ import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.NoSuchElementException;
 
-public class L3Uppgift3 {
+public class L3Uppgift7 {
     /**
-     * A test method for the class BinarySearchTree. In this exercise we count
-     * the number of different words exist in a text file. This can be done by using
-     * Scanner to read the text file. We than iterate through the text file word by 
-     * word. We first need to filter out the non alphabetic characters. We than write
-     * the word to the tree.
+     * The main method reads a text file and stores the first 200 words
+     * in a binary search tree. The binary search tree holds the different words
+     * and how many of each word exists. A method for printing the tree is also
+     * created, both in order and reverse order.
      * 
      * @param args command line arguments
      */
     public static void main(String[] args) {
-        int maxWords = 1000;
+        int maxWords = 200;
         int wordCounter = 0;
         Scanner scanner = null;
 
@@ -58,13 +59,21 @@ public class L3Uppgift3 {
             }
         }
         
-        for(String s: st.keys()) System.out.println(s + " " + st.get(s));
+        Scanner input = new Scanner(System.in);
 
-        String max = "";
-        st.put(max, 0);
-        
-        for(String s: st.keys()) if (st.get(s) > st.get(max)) max = s;
-        System.out.println("Max value: " + max + " " + st.get(max));
+        while (true) {
+            System.out.println("\nPress 1 to print in ordered order");
+            System.out.println("Press 2 to print in reversed order");
+            System.out.println("Press 3 to Exit Program");
+            
+            String choice = input.nextLine();
+
+            if (choice.equals("1")) st.printOrder();
+            else if (choice.equals("2")) st.printReversedOrder();
+            else if (choice.equals("3")) break;
+            else System.out.println("Invalid input");
+        }
+        input.close();
     }
 
     /**
@@ -97,6 +106,44 @@ public class L3Uppgift3 {
          * Initializes the binary search tree.
          */
         public BinarySearchTree() {
+        }
+
+        /**
+         * Caller for the printOrder method.
+         */
+        public void printOrder() {
+            printOrder(root);
+        }
+
+        /**
+         * Prints the tree in order.
+         * 
+         * @param node the node to navigate through the tree
+         */
+        public void printOrder(Node node) {
+            if (node == null) return;
+            printOrder(node.left);
+            System.out.println(node.key);
+            printOrder(node.right);
+        }
+
+        /**
+         * Caller for the printReversedOrder method.
+         */
+        public void printReversedOrder() {
+            printReversedOrder(root);
+        }
+
+        /**
+         * Prints the tree in reverse order.
+         * 
+         * @param node the node to navigate through the tree
+         */
+        public void printReversedOrder(Node node) {
+            if (node == null) return;
+            printReversedOrder(node.right);
+            System.out.println(node.key);
+            printReversedOrder(node.left);
         }
 
         /**
