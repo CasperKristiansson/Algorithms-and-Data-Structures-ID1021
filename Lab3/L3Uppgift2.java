@@ -51,7 +51,7 @@ public class L3Uppgift2 {
                 if (!st.contains(s)) st.put(s, 1);
                 else st.put(s, st.get(s) + 1);
                 
-                if (wordCounter >= 1000) break outerLoop;
+                if (wordCounter >= maxWords) break outerLoop;
                 wordCounter++;
             }
         }
@@ -168,6 +168,7 @@ public class L3Uppgift2 {
          * From that we correct the position of the other key-value pairs in
          * the symbol table.
          * 
+         * @throws NoSuchElementException if the symbol table is empty
          * @param key the key to delete
          * @return the value that is associated with the key
          */
@@ -187,6 +188,7 @@ public class L3Uppgift2 {
         /**
          * Deletes the key-value pair with the smallest key.
          * 
+         * @throws NoSuchElementException if the symbol table is empty
          * @return the key-value pair with the smallest key
          */
         public Key deleteMin() {
@@ -197,6 +199,7 @@ public class L3Uppgift2 {
         /**
          * Delete the key-value pair with the largest key.
          * 
+         * @throws NoSuchElementException if the symbol table is empty
          * @return the key-value pair with the largest key
          */
         public Key deleteMax() {
@@ -207,6 +210,7 @@ public class L3Uppgift2 {
         /**
          * Returns the smallest key in the symbol table.
          * 
+         * @throws NoSuchElementException if the symbol table is empty
          * @return the smallest key in the symbol table
          */
         public Key min() {
@@ -217,6 +221,7 @@ public class L3Uppgift2 {
         /**
          * Returns the largest key in the symbol table.
          * 
+         * @throws NoSuchElementException if the symbol table is empty
          * @return the largest key in the symbol table
          */
         public Key max() {
@@ -227,6 +232,7 @@ public class L3Uppgift2 {
         /**
          * Gets a key value with a specified index.
          * 
+         * @throws NoSuchElementException if the index is out of bounds
          * @param index the index
          * @return the key value with the specified index
          */
@@ -261,6 +267,7 @@ public class L3Uppgift2 {
         /**
          * Checks if a specific key exist in the symbol table.
          * 
+         * @throws NoSuchElementException if the key is invalid
          * @param key the key to check
          * @return true if the key exist in the symbol table, false otherwise
          */
@@ -272,6 +279,7 @@ public class L3Uppgift2 {
         /**
          * Iterates through the symbol table with the key-value pairs.
          * 
+         * @throws NoSuchElementException if the key is invalid
          * @param low the low index
          * @param high the high index
          * @return an queue to iterate through the symbol table
