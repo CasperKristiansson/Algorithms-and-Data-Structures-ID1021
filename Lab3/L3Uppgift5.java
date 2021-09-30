@@ -6,23 +6,14 @@
  * Sources:
 */
 
-import java.io.File;
-import java.io.FileNotFoundException;
 import java.util.Scanner;
 import java.util.NoSuchElementException;
+import java.io.File;
+import java.io.FileNotFoundException;
 
-public class L3Uppgift3 {
-    /**
-     * A test method for the class BinarySearchTree. In this exercise we count
-     * the number of different words exist in a text file. This can be done by using
-     * Scanner to read the text file. We than iterate through the text file word by 
-     * word. We first need to filter out the non alphabetic characters. We than write
-     * the word to the tree.
-     * 
-     * @param args command line arguments
-     */
+public class L3Uppgift5 {
     public static void main(String[] args) {
-        int maxWords = 1000;
+        int maxWords = 997;
         int wordCounter = 0;
         Scanner scanner = null;
 
@@ -55,16 +46,18 @@ public class L3Uppgift3 {
                 wordCounter++;
             }
         }
-        
-        for(String s: st.keys()) System.out.println(s + " " + st.get(s));
 
-        String max = "";
-        st.put(max, 0);
-        
-        for(String s: st.keys()) if (st.get(s) > st.get(max)) max = s;
-        System.out.println("Max value: " + max + " " + st.get(max));
+        for(String s : st.keys()) System.out.println(s + " " + st.get(s));
+
+        int[] hashArray = new int[maxWords];
+
+        for(String s : st.keys()) {
+            int hash = (s.hashCode() & 0x7fffffff) % maxWords;
+            hashArray[hash]++;
+        }
+
+        for(int i : hashArray) System.out.println(i);
     }
-
     /**
      * The class represents a ordered binary search tree with generic key-value pairs.
      * The keys are ordered by their values, which in this exercise is letters in the alphabet.
@@ -351,6 +344,6 @@ public class L3Uppgift3 {
             Queue<Key> queue = new Queue<Key>();
             keys(root, queue, low, high);
             return queue;
-        } 
+        }
     }
 }
