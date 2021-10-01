@@ -48,14 +48,16 @@ public class L3Uppgift7 {
                     }
                 }
                 s = s.trim();
+                String[] stringArray = s.split(" ");
 
-                if(s.length() > 0) {
-                    if (!st.contains(s)) st.put(s, 1);
-                    else st.put(s, st.get(s) + 1);
+                for(String word : stringArray) {
+                    if(word.length() > 0) {
+                        if (!st.contains(word)) st.put(word, 1);
+                        else st.put(word, st.get(word) + 1);
+                    }
+                    if (wordCounter >= maxWords) break outerLoop;
+                        wordCounter++;
                 }
-                
-                if (wordCounter >= maxWords) break outerLoop;
-                wordCounter++;
             }
         }
         

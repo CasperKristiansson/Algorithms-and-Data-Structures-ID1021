@@ -1,11 +1,11 @@
 /**
  * @author Casper Kristiansson
  * Code Generated: 2021-09-30
- * Code Updated: 2021-09-30
- * Problem: 
- * Sources:
+ * Code Updated: 2021-10-01
+ * Problem: Measure the running time of a binary search symbol table that contains the
+ * first 1000 words from a text file. The goal is also to frequency of the words.
+ * Sources: https://algs4.cs.princeton.edu/30searching/, Algorithms 4th Edition (3.2 Binary Search Trees)
 */
-
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
@@ -47,14 +47,16 @@ public class L3Uppgift3 {
                     }
                 }
                 s = s.trim();
+                String[] stringArray = s.split(" ");
 
-                if(s.length() > 0) {
-                    if (!st.contains(s)) st.put(s, 1);
-                    else st.put(s, st.get(s) + 1);
+                for(String word : stringArray) {
+                    if(word.length() > 0) {
+                        if (!st.contains(word)) st.put(word, 1);
+                        else st.put(word, st.get(word) + 1);
+                    }
+                    if (wordCounter >= maxWords) break outerLoop;
+                        wordCounter++;
                 }
-                
-                if (wordCounter >= maxWords) break outerLoop;
-                wordCounter++;
             }
         }
         

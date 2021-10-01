@@ -2,8 +2,9 @@
  * @author Casper Kristiansson
  * Code Generated: 2021-09-30
  * Code Updated: 2021-09-30
- * Problem: 
- * Sources:
+ * Problem: Implement a program which shows how evenly the built in hashCode()
+ * method is. 
+ * Sources: https://algs4.cs.princeton.edu/30searching/, Algorithms 4th Edition (3.2 Binary Search Trees)
 */
 import java.util.Scanner;
 import java.util.NoSuchElementException;
@@ -12,7 +13,7 @@ import java.io.FileNotFoundException;
 
 public class L3Uppgift5 {
     public static void main(String[] args) {
-        int maxWords = 997;
+        int maxWords = 20000;
         int wordCounter = 0;
         Scanner scanner = null;
 
@@ -37,14 +38,16 @@ public class L3Uppgift5 {
                     }
                 }
                 s = s.trim();
+                String[] stringArray = s.split(" ");
 
-                if(s.length() > 0) {
-                    if (!st.contains(s)) st.put(s, 1);
-                    else st.put(s, st.get(s) + 1);
+                for(String word : stringArray) {
+                    if(word.length() > 0) {
+                        if (!st.contains(word)) st.put(word, 1);
+                        else st.put(word, st.get(word) + 1);
+                    }
+                    if (wordCounter >= maxWords) break outerLoop;
+                        wordCounter++;
                 }
-                
-                if (wordCounter >= maxWords) break outerLoop;
-                wordCounter++;
             }
         }
 
@@ -57,7 +60,19 @@ public class L3Uppgift5 {
             hashArray[hash]++;
         }
 
-        for(int i : hashArray) System.out.println(i);
+        for(int i : hashArray) System.out.print(i);
+
+        int largest = hashArray[0];
+        int smallest = hashArray[0];
+        for(int i : hashArray) {
+            if(i > largest) largest = i;
+            if(i < smallest) smallest = i;
+        }
+
+        System.out.println("\nLargest: " + largest);
+        System.out.println("Smallest: " + smallest);
+
+        System.out.println(st.height());
     }
     /**
      * The class represents a ordered binary search tree with generic key-value pairs.
@@ -318,6 +333,26 @@ public class L3Uppgift5 {
             if (low.compareTo(high) > 0) return 0;
             if (contains(high)) return rank(high) - rank(low) + 1;
             else return rank(high) - rank(low);
+        }
+
+        /**
+         * Returns the height of the tree
+         * 
+         * @return the height of the tree
+         */
+        public int height() {
+            return height(root);
+        }
+        
+        /**
+         * Calculates the height of the subtree using recursion
+         * 
+         * @param x The current node
+         * @return the height of the subtree
+         */
+        public int height(Node x) {
+            if (x == null) return -1;
+            return 1 + Math.max(height(x.left), height(x.right));
         }
 
         /**

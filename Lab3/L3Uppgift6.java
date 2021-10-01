@@ -46,14 +46,16 @@ public class L3Uppgift6 {
                     }
                 }
                 s = s.trim();
+                String[] stringArray = s.split(" ");
 
-                if(s.length() > 0) {
-                    if (!st.contains(s)) st.put(s, 1);
-                    else st.put(s, st.get(s) + 1);
+                for(String word : stringArray) {
+                    if(word.length() > 0) {
+                        if (!st.contains(word)) st.put(word, 1);
+                        else st.put(word, st.get(word) + 1);
+                    }
+                    if (wordCounter >= maxWords) break outerLoop;
+                        wordCounter++;
                 }
-                
-                if (wordCounter >= maxWords) break outerLoop;
-                wordCounter++;
             }
         }
 
@@ -77,12 +79,12 @@ public class L3Uppgift6 {
 
     /**
      * The SeparateChainingHashST class is a symbol table of 
-     * generic key-value pairs.
+     * generic key-value pairs. m = table size, n = key-value pairs
      */
     public static class SeparateChainingHashST<Key, Value> {
         private static final int INIT_CAPACITY = 4;
         private int n;
-        private int m;
+        private int m;                  
         private SequentialSearchST<Key, Value>[] st;
         
         /**
