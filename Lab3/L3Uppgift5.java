@@ -1,7 +1,7 @@
 /**
  * @author Casper Kristiansson
  * Code Generated: 2021-09-30
- * Code Updated: 2021-09-30
+ * Code Updated: 2021-10-03
  * Problem: Implement a program which shows how evenly the built in hashCode()
  * method is. 
  * Sources: https://algs4.cs.princeton.edu/30searching/, Algorithms 4th Edition (3.2 Binary Search Trees)
@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 
 public class L3Uppgift5 {
     public static void main(String[] args) {
-        int maxWords = 20000;
+        int maxWords = 16301;
         int wordCounter = 0;
         Scanner scanner = null;
 
@@ -29,16 +29,8 @@ public class L3Uppgift5 {
         while (scanner.hasNextLine()) {
             Scanner line = new Scanner(scanner.nextLine());
             while (line.hasNext()) {
-                String s = line.next().toLowerCase();
-
-                for(int i = 0; i < s.length(); i++) {
-                    char c = s.charAt(i);
-                    if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z') && c != '\n') {
-                        s = s.replace(c, ' ');
-                    }
-                }
-                s = s.trim();
-                String[] stringArray = s.split(" ");
+                String string = line.next();
+                String[] stringArray = filterText(string);
 
                 for(String word : stringArray) {
                     if(word.length() > 0) {
@@ -55,8 +47,8 @@ public class L3Uppgift5 {
 
         int[] hashArray = new int[maxWords];
 
-        for(String s : st.keys()) {
-            int hash = (s.hashCode() & 0x7fffffff) % maxWords;
+        for(String string : st.keys()) {
+            int hash = (string.hashCode() & 0x7fffffff) % maxWords;
             hashArray[hash]++;
         }
 
@@ -71,8 +63,24 @@ public class L3Uppgift5 {
 
         System.out.println("\nLargest: " + largest);
         System.out.println("Smallest: " + smallest);
+    }
 
-        System.out.println(st.height());
+    /**
+     * Filters out non alphabetic characters and returns a string array with the words.
+     * 
+     * @param s the string to be filtered
+     * @return the filtered string array
+     */
+    public static String[] filterText(String s) {
+        s = s.toLowerCase();
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z') && c != '\n') {
+                s = s.replace(c, ' ');
+            }
+        }
+        s = s.trim();
+        return s.split(" ");
     }
     /**
      * The class represents a ordered binary search tree with generic key-value pairs.

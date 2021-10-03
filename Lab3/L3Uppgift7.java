@@ -1,7 +1,7 @@
 /**
  * @author Casper Kristiansson
  * Code Generated: 2021-09-30
- * Code Updated: 2021-09-30
+ * Code Updated: 2021-10-03
  * Problem: Develop a BST which stores the first 200 words from a text file. It
  * should be able to print the words in alphabetical order and in reverse
  * alphabetical order.
@@ -39,16 +39,8 @@ public class L3Uppgift7 {
         while (scanner.hasNextLine()) {
             Scanner line = new Scanner(scanner.nextLine());
             while (line.hasNext()) {
-                String s = line.next().toLowerCase();
-
-                for(int i = 0; i < s.length(); i++) {
-                    char c = s.charAt(i);
-                    if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z') && c != '\n') {
-                        s = s.replace(c, ' ');
-                    }
-                }
-                s = s.trim();
-                String[] stringArray = s.split(" ");
+                String string = line.next();
+                String[] stringArray = filterText(string);
 
                 for(String word : stringArray) {
                     if(word.length() > 0) {
@@ -76,6 +68,24 @@ public class L3Uppgift7 {
             else System.out.println("Invalid input");
         }
         input.close();
+    }
+
+    /**
+     * Filters out non alphabetic characters and returns a string array with the words.
+     * 
+     * @param s the string to be filtered
+     * @return the filtered string array
+     */
+    public static String[] filterText(String s) {
+        s = s.toLowerCase();
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z') && c != '\n') {
+                s = s.replace(c, ' ');
+            }
+        }
+        s = s.trim();
+        return s.split(" ");
     }
 
     /**

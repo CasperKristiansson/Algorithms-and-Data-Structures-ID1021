@@ -1,7 +1,7 @@
 /**
  * @author Casper Kristiansson
  * Code Generated: 2021-09-30
- * Code Updated: 2021-10-01
+ * Code Updated: 2021-10-03
  * Problem: Measure the running time of a binary search symbol table that contains the
  * first 1000 words from a text file. The goal is also to frequency of the words.
  * Sources: https://algs4.cs.princeton.edu/30searching/, Algorithms 4th Edition (3.2 Binary Search Trees)
@@ -22,6 +22,7 @@ public class L3Uppgift3 {
      * @param args command line arguments
      */
     public static void main(String[] args) {
+        boolean runTest = false;
         int maxWords = 1000;
         int wordCounter = 0;
         Scanner scanner = null;
@@ -38,16 +39,8 @@ public class L3Uppgift3 {
         while (scanner.hasNextLine()) {
             Scanner line = new Scanner(scanner.nextLine());
             while (line.hasNext()) {
-                String s = line.next().toLowerCase();
-
-                for(int i = 0; i < s.length(); i++) {
-                    char c = s.charAt(i);
-                    if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z') && c != '\n') {
-                        s = s.replace(c, ' ');
-                    }
-                }
-                s = s.trim();
-                String[] stringArray = s.split(" ");
+                String string = line.next();
+                String[] stringArray = filterText(string);
 
                 for(String word : stringArray) {
                     if(word.length() > 0) {
@@ -67,6 +60,84 @@ public class L3Uppgift3 {
         
         for(String s: st.keys()) if (st.get(s) > st.get(max)) max = s;
         System.out.println("Max value: " + max + " " + st.get(max));
+
+        /**
+         * For running tests
+         */
+        if (runTest) {
+            long durationInsert = 0;
+            long durationSearch = 0;
+            int size = 1000;
+            int numberOfTest = 10000;
+            int currentTest = 0;
+
+            while (currentTest <= numberOfTest) {
+                wordCounter = 0;
+                BinarySearchTree<String, Integer> stTest = new BinarySearchTree<String, Integer>();
+
+                try {
+                    scanner = new Scanner(new File("textFile.txt"), "UTF-8");
+                } catch (FileNotFoundException e) {
+                    e.printStackTrace();
+                }
+                
+                outerLoop:
+                while (scanner.hasNextLine()) {
+                    Scanner line = new Scanner(scanner.nextLine());
+                    while (line.hasNext()) {
+                        String words = line.next();
+                        String[] stringArray = filterText(words);
+        
+                        for(String word : stringArray) {
+                            if (word.length() > 0) {
+                                long startTime;
+                                long endTime;
+                                if (!stTest.contains(word)) {
+                                    startTime = System.nanoTime();
+                                    stTest.put(word, 1);
+                                    endTime = System.nanoTime();
+                                }
+                                else {
+                                    startTime = System.nanoTime();
+                                    stTest.put(word, stTest.get(word) + 1);
+                                    endTime = System.nanoTime();
+                                }
+                                durationInsert += endTime - startTime;   
+
+                                startTime = System.nanoTime();
+                                stTest.get("the");
+                                endTime = System.nanoTime();
+                                durationSearch += endTime - startTime;
+
+                                wordCounter++;
+                                if (wordCounter > size) break outerLoop;
+                            }                 
+                        }
+                    }
+                }
+                currentTest++; 
+            }
+            System.out.println("Average insert time: " + durationInsert / numberOfTest);
+            System.out.println("Average search time: " + durationSearch / numberOfTest);
+        }
+    }
+
+    /**
+     * Filters out non alphabetic characters and returns a string array with the words.
+     * 
+     * @param s the string to be filtered
+     * @return the filtered string array
+     */
+    public static String[] filterText(String s) {
+        s = s.toLowerCase();
+        for(int i = 0; i < s.length(); i++) {
+            char c = s.charAt(i);
+            if(!(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z') && c != '\n') {
+                s = s.replace(c, ' ');
+            }
+        }
+        s = s.trim();
+        return s.split(" ");
     }
 
     /**

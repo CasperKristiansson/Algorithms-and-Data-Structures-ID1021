@@ -21,7 +21,7 @@ public class L3Uppgift1 {
      */
     public static void textFilter() {
         Scanner input = new Scanner(System.in);
-        System.out.println("Enter Text: ");
+        System.out.println("Enter Text:");
 
         StringBuilder sb = new StringBuilder();
 
@@ -35,7 +35,7 @@ public class L3Uppgift1 {
             }
         }
         input.close();
-        System.out.println("Unfiltered Text: " + sb.toString());
+        System.out.println("Unfiltered Text:\n" + sb.toString());
 
         for(int i = 0; i < sb.length(); i++) {
             char c = sb.charAt(i);
@@ -43,6 +43,6 @@ public class L3Uppgift1 {
                 sb.setCharAt(i, ' ');
             }
         }
-        System.out.println("Filtered Text: " + sb.toString());
+        System.out.println("Filtered Text:\n" + sb.toString());
     }
 }
