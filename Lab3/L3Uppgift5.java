@@ -13,7 +13,7 @@ import java.io.FileNotFoundException;
 
 public class L3Uppgift5 {
     public static void main(String[] args) {
-        int maxWords = 16301;
+        int maxWords = 139697; //Nearest prime to the word size
         int wordCounter = 0;
         Scanner scanner = null;
 
@@ -62,7 +62,6 @@ public class L3Uppgift5 {
         }
 
         System.out.println("\nLargest: " + largest);
-        System.out.println("Smallest: " + smallest);
     }
 
     /**
