@@ -23,7 +23,7 @@ public class L3Uppgift6 {
      */
     public static void main(String[] args) {
         SeparateChainingHashST<String, Integer> st = new SeparateChainingHashST<String, Integer>();
-        int maxWords = 140000;
+        int maxWords = 150000;
         int wordCounter = 0;
         Scanner scanner = null;
 

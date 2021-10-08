@@ -13,9 +13,10 @@ import java.io.FileNotFoundException;
 
 public class L3Uppgift5 {
     public static void main(String[] args) {
-        int maxWords = 139697; //Nearest prime to the word size
+        int maxWords = 150000;
         int wordCounter = 0;
         Scanner scanner = null;
+        int differentWords = 0;
 
         BinarySearchTree<String, Integer> st = new BinarySearchTree<String, Integer>();
 
@@ -34,33 +35,30 @@ public class L3Uppgift5 {
 
                 for(String word : stringArray) {
                     if(word.length() > 0) {
-                        if (!st.contains(word)) st.put(word, 1);
+                        if (!st.contains(word)) {
+                            st.put(word, 1);
+                            differentWords += 1;
+                        }
                         else st.put(word, st.get(word) + 1);
                     }
                     if (wordCounter >= maxWords) break outerLoop;
-                        wordCounter++;
+                    wordCounter++;
                 }
             }
         }
 
         for(String s : st.keys()) System.out.println(s + " " + st.get(s));
 
-        int[] hashArray = new int[maxWords];
-
+        int[] hashArray = new int[differentWords];
         for(String string : st.keys()) {
-            int hash = (string.hashCode() & 0x7fffffff) % maxWords;
+            int hash = (string.hashCode() & 0x7fffffff) % differentWords;
             hashArray[hash]++;
         }
 
         for(int i : hashArray) System.out.print(i);
 
         int largest = hashArray[0];
-        int smallest = hashArray[0];
-        for(int i : hashArray) {
-            if(i > largest) largest = i;
-            if(i < smallest) smallest = i;
-        }
-
+        for(int i : hashArray) if(i > largest) largest = i;
         System.out.println("\nLargest: " + largest);
     }
 
