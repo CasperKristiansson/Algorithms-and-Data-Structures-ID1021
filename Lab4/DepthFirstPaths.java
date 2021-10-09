@@ -1,13 +1,13 @@
 /**
- * A class that implements the DepthFirstPaths algorithm
+ * A class that implements the DepthFirstSearch algorithm
  */
 public class DepthFirstPaths {
-    private boolean[] marked;
-    private int[] edgeTo;
-    private final int start;
+    private boolean[] marked;   // Does it have a path to start?
+    private int[] edgeTo;       // last vertex on known path to this vertex
+    private final int start;    // source vertex
 
     /**
-     * Constructor to initialize the algorithm
+     * Constructor to initialize the algorithm the algorithm
      * 
      * @param G the graph to be used
      * @param start the start position
