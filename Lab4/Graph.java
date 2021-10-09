@@ -46,8 +46,7 @@ public class Graph {
      * @param v Checks if the index v is in the graph
      */
     private void validateVertex(int v) {
-        if (v < 0 || v >= V)
-            throw new IllegalArgumentException("Out of Bounds");
+        if (v < 0 || v >= V) throw new IllegalArgumentException("Out of Bounds");
     }
 
     /**

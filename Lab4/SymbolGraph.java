@@ -27,8 +27,7 @@ public class SymbolGraph {
 
             while (in.hasNext()) {
                 String[] vertexes = in.nextLine().split(" ");
-                for (String vertex : vertexes)
-                    if (!st.contains(vertex)) st.put(vertex, st.size());
+                for (String vertex : vertexes) if (!st.contains(vertex)) st.put(vertex, st.size());
             }
             in.close();
 
