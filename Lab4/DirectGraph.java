@@ -1,10 +1,11 @@
 /**
  * The graph class represents a undirected graph of vertices and edges.
  */
-public class Graph {
-    private final int V;        // number of vertices
-    private int E;              // number of edges
-    private Bag<Integer>[] adj;
+public class DirectGraph {
+    private final int V;           // number of different vertices
+    private int E;                 // number of edges
+    private Bag<Integer>[] adj;    // the different vertices connected to the vertex
+    private int[] indegree;        // returns the indegree of the vertex
     
     /**
      * Initializes an empty graph
@@ -13,14 +14,15 @@ public class Graph {
      * @throws IllegalArgumentException if V < 0
      */
     @SuppressWarnings("unchecked")
-    public Graph(int V) {
+    public DirectGraph(int V) {
         if (V < 0) throw new IllegalArgumentException("The number of the vertices are negative");
         this.V = V;
         this.E = 0;
+        indegree = new int[V];
         adj = (Bag<Integer>[]) new Bag[V];
         for (int v = 0; v < V; v++) adj[v] = new Bag<Integer>();
     }
-
+    
     /**
      * Returns the number of vertices in the graph
      * 
@@ -45,11 +47,13 @@ public class Graph {
      * @param v Checks if the index v is in the graph
      */
     private void validateVertex(int v) {
-        if (v < 0 || v >= V) throw new IllegalArgumentException("Out of Bounds");
+        if (v < 0 || v >= V) throw new IllegalArgumentException("Out of bounds");
     }
 
     /**
-     * Adds the edge v-w to the graph
+     * Adds the edge v-w to the graph. The addEdge uses direct graph
+     * which manes that v is only connected to w and not the other way
+     * around
      * 
      * @param v the index of the first vertex
      * @param w the index of the second vertex
@@ -57,9 +61,9 @@ public class Graph {
     public void addEdge(int v, int w) {
         validateVertex(v);
         validateVertex(w);
-        E++;
         adj[v].add(w);
-        adj[w].add(v);
+        indegree[w]++;
+        E++;
     }
 
     /**
@@ -74,14 +78,26 @@ public class Graph {
     }
 
     /**
-     * Returns the number of edges connected to v
+     * Returns the number of edges v is connected to
      * 
      * @param v the index of the vertex
-     * @return the number of edges connected to v
+     * @return the number of edges v is connected to
      */
-    public int degree(int v) {
+    public int outdegree(int v) {
         validateVertex(v);
         return adj[v].size();
+    }
+
+    /**
+     * Returns the number of edges connected to v 
+     * but v is not connected to.
+     * 
+     * @param v the index of the vertex
+     * @return number of edges
+     */
+    public int indegree(int v) {
+        validateVertex(v);
+        return indegree[v];
     }
 
     /**
@@ -91,9 +107,9 @@ public class Graph {
         StringBuilder s = new StringBuilder();
         s.append(V + " vertices, " + E + " edges " + "\n");
         for (int v = 0; v < V; v++) {
-            s.append(v + ": ");
+            s.append(String.format("%d: ", v));
             for (int w : adj[v]) {
-                s.append(w + " ");
+                s.append(String.format("%d ", w));
             }
             s.append("\n");
         }
