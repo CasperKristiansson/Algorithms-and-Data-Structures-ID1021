@@ -2,7 +2,6 @@
  * A class that implements the BreadthFirstSearch algorithm
  */
 public class BreadthFirstPaths {
-    private static final int INFINITY = Integer.MAX_VALUE;
     private boolean[] marked;   // Does it have a path to start?
     private int[] edgeTo;       // last vertex on known path to this vertex
     private int[] distTo;       // length of shortest known path to this vertex
@@ -33,7 +32,7 @@ public class BreadthFirstPaths {
     private void bfs(Graph G, int start) {
         Queue<Integer> queue = new Queue<Integer>();
 
-        for (int v = 0; v < G.V(); v++) distTo[v] = INFINITY;
+        for (int v = 0; v < G.V(); v++) distTo[v] = Integer.MAX_VALUE;
         distTo[start] = 0;
         marked[start] = true;
         queue.enqueue(start);

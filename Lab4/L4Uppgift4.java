@@ -2,7 +2,7 @@
  * @author Casper Kristiansson
  * Code Generated: 2021-10-10
  * Code Updated: 2021-10-10
- * Problem:
+ * Problem: Search for a path between A and B using DFS with directed edges
  * Sources: Algorithms 4th edition (Directed Graphs, 4.2), https://algs4.cs.princeton.edu/40graphs/
 */
 public class L4Uppgift4 {

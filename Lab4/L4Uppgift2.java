@@ -2,7 +2,7 @@
  * @author Casper Kristiansson
  * Code Generated: 2021-10-08
  * Code Updated: 2021-10-09
- * Problem: Write a program that uses DFS which can calculates a path from
+ * Problem: Write a program that uses BFS which can calculates a path from
  * two different nodes in a graph.
  * Sources: Algorithms 4th edition (Undirected Graphs, 4.1), https://algs4.cs.princeton.edu/40graphs/
 */
