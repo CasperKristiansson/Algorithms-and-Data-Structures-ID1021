@@ -16,7 +16,7 @@ public class L4Uppgift2 {
     public static void main(String[] args) {
         String filename = "data.txt";
         String from = "AL";
-        String to = "OR";
+        String to = "CA";
 
         SymbolGraph sg = new SymbolGraph(filename); 
         Graph G = sg.graph();
